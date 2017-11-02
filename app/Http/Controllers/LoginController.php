@@ -40,6 +40,7 @@ class LoginController extends Controller
      */
     public function verify(LoginRequest $request)
     {
+      // Login System
         $user = DB::table('users')
           ->where('email', $request->Email)
           ->where('password', $request->Pass)
