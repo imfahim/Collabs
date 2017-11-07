@@ -20,9 +20,9 @@ class RegisterController extends Controller
     }
     public function store(RegisterRequest $request)
     {
-        $created_at = date('Y/m/d h:i:s', time());
+        //$created_at = date('Y/m/d h:i:s', time()); ,'created_at' => $created_at
         $id =DB::table('users')->insertGetId(
-                ['name' => $request->input('name'),'email' => $request->input('email'), 'password' => $request->input('password'),'type'=>$request->input('type'),'created_at' => $created_at ]
+                ['name' => $request->input('name'),'email' => $request->input('email'), 'password' => $request->input('password'),'type'=>$request->input('type') ]
         );
 
 
