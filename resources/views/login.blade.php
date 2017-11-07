@@ -8,7 +8,7 @@
 		<tr>
 			<td width="100"></td>
 			<td align="center">
-				<h1>User</h1>
+				<h1>Login Page</h1>
 			</td>
 			<td width="100"></td>
 		</tr>
