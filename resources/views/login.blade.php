@@ -44,7 +44,7 @@
 								<td></td>
 								<td>
 									<br/>
-									Click <a href="">here</a> to register
+									Click <a href="{{route('register')}}">here</a> to register
 								</td>
 							</tr>
 						</table>

@@ -33,12 +33,12 @@ class LoginController extends Controller
 
             return redirect()->route('company.home');
           }
-
+          else{
           Session::flash('success', 'Successfully Logged In!' );
-          Session::push('id', $user->id);
+          Session::put('id', $user->id);
 
           return redirect()->route('user.home');
-
+        }
         }
     }
 }

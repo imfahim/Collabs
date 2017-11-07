@@ -12,14 +12,14 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('login');
 });
 
 Route::get('/login', 'LoginController@index')->name('login');
 Route::post('/login', 'LoginController@verify')->name('login.verify');
 
 Route::get('/register', 'RegisterController@index')->name('register');
-Route::post('/register', 'RegisterController@execute')->name('register.execute');
+Route::post('/register', 'RegisterController@store')->name('register.execute');
 
 
 
