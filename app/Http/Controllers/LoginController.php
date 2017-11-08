@@ -29,7 +29,7 @@ class LoginController extends Controller
 
           if($user->type == 1){
             Session::flash('success', 'Successfully Logged In!' );
-            Session::push('id', $user->id);
+            Session::put('id', $user->id);
 
             return redirect()->route('company.home');
           }

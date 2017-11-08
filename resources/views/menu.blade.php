@@ -42,6 +42,7 @@
   <div class="content-wrapper">
     <div class="container-fluid">
 
+@include('alerts')
 @yield('content')
 
 
@@ -67,6 +68,9 @@
     <!-- Custom scripts for this page-->
     <script src="{{ asset('js/sb-admin-datatables.min.js') }}"></script>
     <script src="{{ asset('js/sb-admin-charts.min.js') }}"></script>
+
+    @yield('page-scripts')
+
       </div>
     </footer>
 

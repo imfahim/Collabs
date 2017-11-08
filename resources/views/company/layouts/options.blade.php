@@ -8,7 +8,7 @@
           <a class="nav-link" href="#">Company Info</a>
         </li>
         <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Contest">
-          <a class="nav-link" href="#">Contest</a>
+          <a class="nav-link" href="{{ route('contests.index') }}">Contest</a>
         </li>
         <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Hire">
           <a class="nav-link" href="#">Hire</a>
