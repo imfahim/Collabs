@@ -8,7 +8,7 @@
   <a class="nav-link" href="#">Profile</a>
 </li>
 <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Team">
-  <a class="nav-link" href="#">Team</a>
+  <a class="nav-link" href="{{route('team')}}">Team</a>
 </li>
 <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Project">
   <a class="nav-link" href="#">Project</a>

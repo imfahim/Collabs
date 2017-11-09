@@ -23,6 +23,20 @@ Route::post('/register', 'RegisterController@store')->name('register.execute');
 
 
 
+Route::get('/team', 'User\TeamController@index')->name('team');
+
+Route::get('/team/create', 'User\TeamController@create')->name('team.create');
+Route::post('/team/create', 'User\TeamController@store')->name('team.store');
+
+Route::get('/team/edit/{id}', 'User\TeamController@edit')->name('team.edit');
+Route::post('/team/edit/{id}', 'User\TeamController@update')->name('team.update');
+
+Route::get('/team/details/{id}', 'User\TeamController@details')->name('team.details');
+
+
+
+
+
 
 Route::group(['prefix' => 'user'], function(){
   Route::get('/', 'User\HomeController@index')->name('user.home');
