@@ -44,4 +44,6 @@ Route::group(['prefix' => 'user'], function(){
 
 Route::group(['prefix' => 'company'], function(){
   Route::get('/', 'Company\HomeController@index')->name('company.home');
+
+  Route::resource('contests', 'Company\ContestController');
 });

@@ -47,6 +47,7 @@
   <div class="content-wrapper">
     <div class="container-fluid">
 
+<<<<<<< HEAD
 @if(Session::has('msg'))
 <div class="alert alert-success alert-dismissable">
     <a href="#" class="close" data-dismiss="alert" aria-label="close">×</a>
@@ -55,6 +56,9 @@
 @endif
 
 
+=======
+@include('alerts')
+>>>>>>> da2a70131b3887dce53022f0681246b793061a22
 @yield('content')
 
 
@@ -81,6 +85,9 @@
     <!-- Custom scripts for this page-->
     <script src="{{ asset('js/sb-admin-datatables.min.js') }}"></script>
     <script src="{{ asset('js/sb-admin-charts.min.js') }}"></script>
+
+    @yield('page-scripts')
+
       </div>
     </footer>
 
