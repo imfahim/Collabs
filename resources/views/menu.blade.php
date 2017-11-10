@@ -39,7 +39,7 @@
       </ul>
       <ul class="navbar-nav ml-auto pull-right">
         <li class="nav-item">
-          <a class="nav-link">Logout</a>
+          <a class="nav-link" href="{{ route('logout') }}">Logout</a>
         </li>
       </ul>
     </div>
@@ -47,7 +47,7 @@
   <div class="content-wrapper">
     <div class="container-fluid">
 
-<<<<<<< HEAD
+
 @if(Session::has('msg'))
 <div class="alert alert-success alert-dismissable">
     <a href="#" class="close" data-dismiss="alert" aria-label="close">×</a>
@@ -56,9 +56,9 @@
 @endif
 
 
-=======
+
 @include('alerts')
->>>>>>> da2a70131b3887dce53022f0681246b793061a22
+
 @yield('content')
 
 

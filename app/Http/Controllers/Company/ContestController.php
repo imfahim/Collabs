@@ -17,7 +17,8 @@ class ContestController extends Controller
      */
     public function index()
     {
-        $contests = Contest::all();
+
+        $contests = Contest::where('company_id', Session::get('id'))->get();
 
         return view('company.contests.index')->with('contests', $contests);
     }
@@ -65,9 +66,22 @@ class ContestController extends Controller
      */
     public function show($id)
     {
-        $contest = Contest::find($id);
+        try
+        {
+            $contest = Contest::findOrFail($id);
 
-        return view('company.contests.show')->with('contest', $contest);
+            if($contest->company_id === Session::get('id')){
+              return view('company.contests.show')->with('contest', $contest);
+            }
+
+            Session::flash('fail', 'Your requested contest does not exist !');
+            return redirect()->route('contests.index');
+        }
+        catch(ModelNotFoundException $e)
+        {
+          Session::flash('fail', 'Your requested contest does not exist !'.' Server Error : '.$e);
+          return redirect()->route('contests.index');
+        }
     }
 
     /**
@@ -78,22 +92,35 @@ class ContestController extends Controller
      */
     public function edit($id)
     {
-        $contest = Contest::find($id);
+        try
+        {
+            $contest = Contest::findOrFail($id);
 
-        // Dates
-        $start_date = explode('-', $contest->start_on);
-        $end_date = explode('-', $contest->close_on);
+            if($contest->company_id === Session::get('id')){
+              // Dates
+              $start_date = explode('-', $contest->start_on);
+              $end_date = explode('-', $contest->close_on);
 
-        $dates = [
-          'start_year' => $start_date[0],
-          'start_month' => $start_date[1],
-          'start_day' => $start_date[2],
-          'end_year' => $end_date[0],
-          'end_month' => $end_date[1],
-          'end_day' => $end_date[2]
-        ];
+              $dates = [
+                'start_year' => $start_date[0],
+                'start_month' => $start_date[1],
+                'start_day' => $start_date[2],
+                'end_year' => $end_date[0],
+                'end_month' => $end_date[1],
+                'end_day' => $end_date[2]
+              ];
 
-        return view('company.contests.edit')->with('contest', $contest)->with('dates', $dates);
+              return view('company.contests.edit')->with('contest', $contest)->with('dates', $dates);
+            }
+
+            Session::flash('fail', 'Your requested contest does not exist !');
+            return redirect()->route('contests.index');
+        }
+        catch(ModelNotFoundException $e)
+        {
+          Session::flash('fail', 'Your requested contest does not exist !'.' Server Error : '.$e);
+          return redirect()->route('contests.index');
+        }
     }
 
     /**
@@ -105,6 +132,8 @@ class ContestController extends Controller
      */
     public function update(Request $request)
     {
+        // company id checking ta middleware er maddhome korte hobe pore
+
         $contest = Contest::find($request->id);
 
         $start_date = Carbon::createFromDate($request->start_year, $request->start_month, $request->start_day, 'Asia/Dhaka');
@@ -131,10 +160,25 @@ class ContestController extends Controller
      */
     public function destroy(Request $request)
     {
-        // For deleting multiple rows pass the array of ids
-        Contest::destroy($request->id);
+        try
+        {
+            $contest = Contest::findOrFail($request->id);
 
-        Session::flash('success', 'Contest Successfully Deleted !');
-        return redirect()->route('contests.index');
+            if($contest->company_id === Session::get('id')){
+              // For deleting multiple rows pass the array of ids
+              Contest::destroy($request->id);
+
+              Session::flash('success', 'Contest Successfully Deleted !');
+              return redirect()->route('contests.index');
+            }
+
+            Session::flash('fail', 'Your requested contest does not exist !');
+            return redirect()->route('contests.index');
+        }
+        catch(ModelNotFoundException $e)
+        {
+          Session::flash('fail', 'Your requested contest does not exist !'.' Server Error : '.$e);
+          return redirect()->route('contests.index');
+        }
     }
 }

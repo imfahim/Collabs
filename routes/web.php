@@ -17,9 +17,12 @@ Route::get('/', function () {
 
 Route::get('/login', 'LoginController@index')->name('login');
 Route::post('/login', 'LoginController@verify')->name('login.verify');
+Route::get('/logout', 'LoginController@logout')->name('logout');
 
 Route::get('/register', 'RegisterController@index')->name('register');
 Route::post('/register', 'RegisterController@store')->name('register.execute');
+
+
 
 
 

@@ -42,4 +42,11 @@ class LoginController extends Controller
         }
         }
     }
+
+    public function logout(){
+      Session::flush();
+
+      Session::flash('success', 'You are successfully logged out !');
+      return redirect()->route('login');
+    }
 }
