@@ -5,7 +5,7 @@
   <a class="nav-link" href="#">Home</a>
 </li>
 <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Profile">
-  <a class="nav-link" href="#">Profile</a>
+  <a class="nav-link" href="{{ route('profile.index')}}">Profile</a>
 </li>
 <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Team">
   <a class="nav-link" href="{{route('team')}}">Team</a>

@@ -57,6 +57,7 @@ Route::get('/team/memremove/{teamid}/{userid}', 'User\TeamController@memremove')
 
 Route::group(['prefix' => 'user'], function(){
   Route::get('/', 'User\HomeController@index')->name('user.home');
+  Route::resource('profile', 'User\ProfileController', ['except' => 'show']);
 
   Route::resource('projects', 'User\ProjectController');
 
@@ -67,6 +68,7 @@ Route::group(['prefix' => 'user'], function(){
 
 Route::group(['prefix' => 'company'], function(){
   Route::get('/', 'Company\HomeController@index')->name('company.home');
+  Route::resource('companyprofile', 'Company\ProfileController', ['except' => 'show']);
 
   Route::resource('contests', 'Company\ContestController');
 

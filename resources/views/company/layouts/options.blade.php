@@ -5,7 +5,7 @@
           <a class="nav-link" href="#">Home</a>
         </li>
         <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Company Info">
-          <a class="nav-link" href="#">Company Info</a>
+          <a class="nav-link" href="{{ route('companyprofile.index')}}">Company Info</a>
         </li>
         <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Contest">
           <a class="nav-link" href="{{ route('contests.index') }}">Contest</a>
