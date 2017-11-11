@@ -45,6 +45,10 @@ class TeamController extends Controller
       ->where('team_id', $id)
       ->update(['invite' => 1]);
 
+      DB::table('teams')
+      ->where('id', $id)
+      ->increment('existing_member');
+
       Session::flash('success', 'Team Joined!');
       return redirect()->route('team');
     }
@@ -60,6 +64,34 @@ class TeamController extends Controller
       return redirect()->route('team');
     }
 
+    public function cancel($teamid,$userid){
+      DB::table('team_user')
+      ->where('user_id', $userid)
+      ->where('team_id', $teamid)
+      ->delete();
+
+      Session::flash('success', 'Canceled!');
+
+      return redirect()->route('team.details',[$teamid]);
+    }
+
+    public function memremove($teamid,$userid){
+      DB::table('team_user')
+      ->where('user_id', $userid)
+      ->where('team_id', $teamid)
+      ->delete();
+
+      DB::table('teams')
+      ->where('id', $teamid)
+      ->decrement('existing_member');
+
+      Session::flash('success', 'Removed!');
+
+      return redirect()->route('team.details',[$teamid]);
+    }
+
+
+
     public function requests()
     {
       $rqsts=DB::table('team_user')
@@ -67,7 +99,9 @@ class TeamController extends Controller
                 ->where('team_user.user_id',session('id'))
                 ->where('team_user.invite',0)
                 ->paginate(3);
-      return view('user.team.requests')->withTeams($rqsts);
+
+      return view('user.team.requests')->withTeams($rqsts)
+                                        ->withHas(count($rqsts));
     }
 
     public function edit($id)
@@ -101,6 +135,10 @@ class TeamController extends Controller
           //already a member
           Session::flash('success', 'Already a member!' );
         }
+      }
+      else if($userid==session('id')){
+        Session::flash('fail', 'Cant invite urself dumbfuck!');
+        return redirect()->route('team.details',[$teamid]);
       }
       else{
       DB::table('team_user')->insert(

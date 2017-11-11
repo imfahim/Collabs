@@ -1,7 +1,7 @@
 @extends ('user.layouts.options')
 
 @section('content')
-
+  @if($has!=0)
   @foreach($teams as $jin)
     <div class="panel panel-default">
       <div class="panel-heading">
@@ -26,4 +26,8 @@
     </div>
   @endforeach
   {{ $teams->links() }}
+  @else
+  No Requests To Show
+  @endif
+
 @endsection

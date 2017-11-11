@@ -46,6 +46,10 @@ Route::get('/team/requests', 'User\TeamController@requests')->name('team.request
 Route::get('/team/accept/{id}', 'User\TeamController@reqaccept')->name('team.accept');
 Route::get('/team/decline/{id}', 'User\TeamController@reqdecline')->name('team.decline');
 
+Route::get('/team/reqcancel/{teamid}/{userid}', 'User\TeamController@cancel')->name('team.reqcancel');
+Route::get('/team/memremove/{teamid}/{userid}', 'User\TeamController@memremove')->name('team.memremove');
+
+
 
 
 
