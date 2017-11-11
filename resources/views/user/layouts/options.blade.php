@@ -11,6 +11,6 @@
   <a class="nav-link" href="{{route('team')}}">Team</a>
 </li>
 <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Project">
-  <a class="nav-link" href="#">Project</a>
+  <a class="nav-link" href="{{ route('projects.index') }}">Project</a>
 </li>
 @endsection

@@ -53,6 +53,8 @@ Route::get('/team/decline/{id}', 'User\TeamController@reqdecline')->name('team.d
 
 Route::group(['prefix' => 'user'], function(){
   Route::get('/', 'User\HomeController@index')->name('user.home');
+
+  Route::resource('projects', 'User\ProjectController');
 });
 
 Route::group(['prefix' => 'company'], function(){
