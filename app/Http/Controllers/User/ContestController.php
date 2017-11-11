@@ -18,16 +18,22 @@ class ContestController extends Controller
 
       $participations = RelContestUser::where('user_id', Session::get('id'))->get(['contest_id', 'team_id', 'project_id', 'status']);
 
-      foreach ($participations as $participation) {
-        $data_array[] = [
-          'contest_name' => Contest::where('id', $participation->contest_id)->first()->title,
-          'team_name' => Team::where('id', $participation->team_id)->first()->name,
-          'project_name' => Project::where('id', $participation->project_id)->first()->name,
-          'status' => $participation->status,
-        ];
+      $data_array = array();
+      $data_has = false;
+
+      if(!$participations->isEmpty()){
+        $data_has = true;
+        foreach ($participations as $participation) {
+          $data_array[] = [
+            'contest_name' => Contest::where('id', $participation->contest_id)->first()->title,
+            'team_name' => Team::where('id', $participation->team_id)->first()->name,
+            'project_name' => Project::where('id', $participation->project_id)->first()->name,
+            'status' => $participation->status,
+          ];
+        }
       }
 
-      return view('user.contests.index')->with('contests', $contests)->with('teams', $teams)->with('joined_contests', $data_array);
+      return view('user.contests.index')->with('contests', $contests)->with('teams', $teams)->with('joined_contests', $data_array)->with('has_data', $data_has);
     }
 
     public function join(Request $request){

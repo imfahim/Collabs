@@ -89,28 +89,32 @@
       </div>
       <div class="card">
         <div class="card-body">
-          @foreach ($joined_contests as $data)
-            <div class="card" style="width: 50rem;">
-              <div class="card-body">
-                <div class="pull-left">
-                  <h6 class="card-subtitle mb-2 text-muted">Participated Team : {{ $data['team_name'] }}</h6>
-                  <h6 class="card-subtitle mb-2 text-muted">Submitted Project : {{ $data['project_name'] }}</h6>
-                  <h6 class="card-subtitle mb-2 text-muted">Status :
-                    @if($data['status'] === 1)
-                      <span class="label label-success">Winner</span></h6>
-                    @elseif($data['status'] === 2)
-                      <span class="label label-danger">Rejected</span></h6>
-                    @else
-                      <span class="label label-warning">On Review</span></h6>
-                    @endif
-                  <p class="card-text"><strong>{{ $data['contest_name'] }}</strong></p>
-                </div>
-                <div class="pull-right">
-                  <a href="#" class="btn btn-sm btn-danger">Cancel Participation</a>
+          @if ($has_data)
+            @foreach ($joined_contests as $data)
+              <div class="card" style="width: 50rem;">
+                <div class="card-body">
+                  <div class="pull-left">
+                    <h6 class="card-subtitle mb-2 text-muted">Participated Team : {{ $data['team_name'] }}</h6>
+                    <h6 class="card-subtitle mb-2 text-muted">Submitted Project : {{ $data['project_name'] }}</h6>
+                    <h6 class="card-subtitle mb-2 text-muted">Status :
+                      @if($data['status'] === 1)
+                        <span class="label label-success">Winner</span></h6>
+                      @elseif($data['status'] === 2)
+                        <span class="label label-danger">Rejected</span></h6>
+                      @else
+                        <span class="label label-warning">On Review</span></h6>
+                      @endif
+                    <p class="card-text"><strong>{{ $data['contest_name'] }}</strong></p>
+                  </div>
+                  <div class="pull-right">
+                    <a href="#" class="btn btn-sm btn-danger">Cancel Participation</a>
+                  </div>
                 </div>
               </div>
-            </div>
-          @endforeach
+            @endforeach  
+          @else
+            You have not participating any contests yet !
+          @endif
         </div>
       </div>
     </div>
