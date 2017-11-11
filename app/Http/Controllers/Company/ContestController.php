@@ -76,12 +76,14 @@ class ContestController extends Controller
             if($contest->company_id === Session::get('id')){
               $participations = RelContestUser::where('contest_id', $contest->id)->get(['id', 'team_id', 'project_id', 'status']);
 
+              $data_array = array();
+
               foreach ($participations as $participation) {
                 $data_array[] = [
                   'id' => $participation->id,
-                  'team_name' => Team::where('id', $participation->team_id)->first()->name,
+                  'team_name' => Team::where('id', $participation->team_id)->first()['name'],
                   'project_id' => $participation->project_id,
-                  'project_name' => Project::where('id', $participation->project_id)->first()->name,
+                  'project_name' => Project::where('id', $participation->project_id)->first()['name'],
                   'status' => $participation->status,
                 ];
               }
