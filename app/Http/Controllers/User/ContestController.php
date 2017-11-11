@@ -23,11 +23,12 @@ class ContestController extends Controller
 
       if(!$participations->isEmpty()){
         $data_has = true;
+
         foreach ($participations as $participation) {
           $data_array[] = [
-            'contest_name' => Contest::where('id', $participation->contest_id)->first()->title,
-            'team_name' => Team::where('id', $participation->team_id)->first()->name,
-            'project_name' => Project::where('id', $participation->project_id)->first()->name,
+            'contest_name' => Contest::where('id', $participation->contest_id)->first()['title'],
+            'team_name' => Team::where('id', $participation->team_id)->first()['name'],
+            'project_name' => Project::where('id', $participation->project_id)->first()['name'],
             'status' => $participation->status,
           ];
         }
