@@ -24,34 +24,40 @@
           <p class="lead">
             <strong>Participants :</strong>
           </p>
-          <table class="table table-striped table-dark" data-form="deleteForm">
-            <thead>
-              <tr>
-                <th scope="col">Teams</th>
-                <th scope="col">Projects</th>
-                <th scope="col">Status</th>
-                <th scope="col">Actions</th>
-              </tr>
-            </thead>
-            <tbody>
+          @if($participants)
+            <table class="table table-striped table-dark" data-form="deleteForm">
+              <thead>
                 <tr>
-                  <th scope="row">xxxxxx</th>
-                  <td>xxxx</td>
-                  <td>xxxxx</td>
-                  <td>
-                    <div class="btn-toolbar justify-content-between" role="toolbar" aria-label="Toolbar with button groups">
-                      <div class="btn-group" role="group" aria-label="First group">
-                        <a href="#" class="btn btn-sm btn-outline-success" role="button">Declare Winner</a>
-                        <a href="#" class="btn btn-sm btn-outline-danger" role="button">Reject</a>
-                      </div>
-                    </div>
-                  </td>
+                  <th scope="col">Teams</th>
+                  <th scope="col">Projects</th>
+                  <th scope="col">Status</th>
+                  <th scope="col">Actions</th>
                 </tr>
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+                  @foreach ($participants as $participant)
+                    <tr>
+                      <th scope="row">{{ $participant['team_name'] }}</th>
+                      <td>{{ $participant['project_name'] }}</td>
+                      <td>
+                        @if($participant['status'] === 1)
+                          <span class="label label-success">Winner</span></h6>
+                        @elseif($participant['status'] === 2)
+                          <span class="label label-danger">Rejected</span></h6>
+                        @else
+                          <span class="label label-warning">On Review</span></h6>
+                        @endif
+                      </td>
+                      <td>
+                        <a href="{{ route('company.review.show', [$participant['id'], $participant['project_id']]) }}" class="btn btn-sm btn-outline-info" role="button">Project Review</a>
+                      </td>
+                    </tr>
+                  @endforeach
+              </tbody>
+            </table>
+          @endif
         </div>
       </div>
-
     </div>
   </div>
 @endsection

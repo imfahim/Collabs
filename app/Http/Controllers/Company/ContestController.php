@@ -5,6 +5,9 @@ namespace App\Http\Controllers\Company;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Contest;
+use App\Team;
+use App\Project;
+use App\RelContestUser;
 use Session;
 use Carbon\Carbon;
 
@@ -71,7 +74,19 @@ class ContestController extends Controller
             $contest = Contest::findOrFail($id);
 
             if($contest->company_id === Session::get('id')){
-              return view('company.contests.show')->with('contest', $contest);
+              $participations = RelContestUser::where('contest_id', $contest->id)->get(['id', 'team_id', 'project_id', 'status']);
+
+              foreach ($participations as $participation) {
+                $data_array[] = [
+                  'id' => $participation->id,
+                  'team_name' => Team::where('id', $participation->team_id)->first()->name,
+                  'project_id' => $participation->project_id,
+                  'project_name' => Project::where('id', $participation->project_id)->first()->name,
+                  'status' => $participation->status,
+                ];
+              }
+
+              return view('company.contests.show')->with('contest', $contest)->with('participants', $data_array);
             }
 
             Session::flash('fail', 'Your requested contest does not exist !');
@@ -181,4 +196,5 @@ class ContestController extends Controller
           return redirect()->route('contests.index');
         }
     }
+
 }
