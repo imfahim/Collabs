@@ -43,6 +43,8 @@ Route::get('/team/details/{id}', 'User\TeamController@details')->name('team.deta
 
 Route::group(['prefix' => 'user'], function(){
   Route::get('/', 'User\HomeController@index')->name('user.home');
+
+  Route::resource('projects', 'User\ProjectController');
 });
 
 Route::group(['prefix' => 'company'], function(){
