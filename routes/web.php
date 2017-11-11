@@ -36,6 +36,16 @@ Route::post('/team/edit/{id}', 'User\TeamController@update')->name('team.update'
 
 Route::get('/team/details/{id}', 'User\TeamController@details')->name('team.details');
 
+Route::get('/team/searchuser/{id}', 'User\TeamController@searchuser')->name('team.searchuser');
+Route::post('/team/searchuser/{id}', 'User\TeamController@searchresult')->name('team.searchresult');
+
+Route::get('/team/invite/{teamid}/{userid}', 'User\TeamController@invite')->name('team.invite');
+
+Route::get('/team/requests', 'User\TeamController@requests')->name('team.requests');
+
+Route::get('/team/accept/{id}', 'User\TeamController@reqaccept')->name('team.accept');
+Route::get('/team/decline/{id}', 'User\TeamController@reqdecline')->name('team.decline');
+
 
 
 

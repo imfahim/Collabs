@@ -29,7 +29,7 @@
                    <label class="control-label col-sm-2">Total Member:</label>
                    <div class="col-sm-10">
                      <select class="form-control" name="total_member" style="font-size:10px;">
-                       @for ($i = $team->total_member; $i < 51; $i++)
+                       @for ($i = $team->existing_member; $i < 51; $i++)
                            <option value="{{$i}}" {{ ($i == $team->total_member) ? ' selected="selected"' : '' }}>{{$i}}</option>
                        @endfor
                      </select>
