@@ -1,6 +1,7 @@
 @extends ('user.layouts.options')
 
 @section('content')
+<a href="{{ URL::previous() }}" class="btn btn-primary">Back</a><br><br>
 <div class="container-fluid">
 <form method="post">
   {{csrf_field()}}

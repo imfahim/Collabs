@@ -1,6 +1,10 @@
 @extends ('user.layouts.options')
 
 @section('content')
+<a href="{{ URL::previous() }}" class="btn btn-primary">Back</a><br><br>
+@if(count($users)==0)
+No search Result
+@endif
 @foreach($users as $us)
 <div class="panel panel-default">
   <div class="panel-heading">{{$us->name}}</div>

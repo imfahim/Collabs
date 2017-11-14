@@ -45,9 +45,6 @@ class TeamController extends Controller
       ->where('team_id', $id)
       ->update(['invite' => 1]);
 
-      DB::table('teams')
-      ->where('id', $id)
-      ->increment('existing_member');
 
       Session::flash('success', 'Team Joined!');
       return redirect()->route('team');
@@ -58,7 +55,9 @@ class TeamController extends Controller
       ->where('user_id', session('id'))
       ->where('team_id', $id)
       ->delete();
-
+      DB::table('teams')
+      ->where('id', $teamid)
+      ->decrement('existing_member');
       Session::flash('success', 'Declined!');
 
       return redirect()->route('team');
@@ -69,6 +68,10 @@ class TeamController extends Controller
       ->where('user_id', $userid)
       ->where('team_id', $teamid)
       ->delete();
+
+      DB::table('teams')
+      ->where('id', $teamid)
+      ->decrement('existing_member');
 
       Session::flash('success', 'Canceled!');
 
@@ -126,6 +129,10 @@ class TeamController extends Controller
                   ->where('user_id',$userid)
                   ->first();
 
+      $thisteam = DB::table('teams')
+                ->where('id',$teamid)
+                  ->first();
+
       if($us){
         if($us->invite==0){
           //reqst sent
@@ -140,10 +147,18 @@ class TeamController extends Controller
         Session::flash('fail', 'Cant invite urself dumbfuck!');
         return redirect()->route('team.details',[$teamid]);
       }
+      else if($thisteam->existing_member >= $thisteam->total_member){
+        Session::flash('fail', 'Member limit reached!');
+        return redirect()->route('team.details',[$teamid]);
+      }
       else{
       DB::table('team_user')->insert(
           ['user_id'=>$userid,'team_id'=>$teamid]
       );
+      DB::table('teams')
+      ->where('id', $teamid)
+      ->increment('existing_member');
+
       Session::flash('success', 'Request Sent!');
       }
       return redirect()->route('team.details',[$teamid]);
@@ -157,9 +172,14 @@ class TeamController extends Controller
         ]);
 
       $users = DB::Table('users')
-                ->select('*')
-                ->where('name','LIKE','%'.$request->input('search').'%')
-                ->orWhere('email','LIKE','%'.$request->input('search').'%')
+                ->where([
+                  ['type','=',0],
+                  ['name','LIKE','%'.$request->input('search').'%'],
+                ])
+                ->orWhere([
+                  ['type','=',0],
+                  ['email','LIKE','%'.$request->input('search').'%'],
+                ])
                 ->get();
 
       return view('user.team.searchresult')->withUsers($users)

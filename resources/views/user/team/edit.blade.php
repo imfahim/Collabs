@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="container-fluid">
-  <a href="{{route('team')}}" class="btn btn-primary">Back</a><br><br>
+  <a href="{{ URL::previous() }}" class="btn btn-primary">Back</a><br><br>
   <div class="panel-group">
     <div class="panel panel-info">
         <div class="panel-heading">EditTeam</div>

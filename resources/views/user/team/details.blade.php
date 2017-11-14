@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="container-fluid">
-  <a href="{{route('team')}}" class="btn btn-primary">Back</a>
+  <a href="{{ URL::previous() }}" class="btn btn-primary">Back</a>
   <div class="row">
     <div class="col-md-6">
       project portions

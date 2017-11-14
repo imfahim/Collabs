@@ -1,6 +1,7 @@
 @extends ('user.layouts.options')
 
 @section('content')
+<a href="{{ URL::previous() }}" class="btn btn-primary">Back</a><br><br>
   @if($has!=0)
   @foreach($teams as $jin)
     <div class="panel panel-default">
