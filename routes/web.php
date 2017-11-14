@@ -11,16 +11,7 @@
 |
 */
 
-Route::get('/', function () {
-    return view('login');
-});
 
-Route::get('/login', 'LoginController@index')->name('login');
-Route::post('/login', 'LoginController@verify')->name('login.verify');
-Route::get('/logout', 'LoginController@logout')->name('logout');
-
-Route::get('/register', 'RegisterController@index')->name('register');
-Route::post('/register', 'RegisterController@store')->name('register.execute');
 
 
 
@@ -53,6 +44,18 @@ Route::get('/team/memremove/{teamid}/{userid}', 'User\TeamController@memremove')
 
 
 
+Route::get('/', function () {
+    return view('welcome');
+});
+
+Route::get('/logout', 'LoginController@logout')->name('logout');
+Route::get('/register', 'RegisterController@index')->name('register');
+Route::post('/register', 'RegisterController@store')->name('register.execute');
+
+Route::group(['middleware' => 'access.guest'], function(){
+  Route::get('/login', 'LoginController@index')->name('login');
+  Route::post('/login', 'LoginController@verify')->name('login.verify');
+});
 
 Route::group(['middleware' => 'access.auth'], function(){
 
