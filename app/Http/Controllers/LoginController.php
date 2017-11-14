@@ -5,10 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\Http\Requests\LoginRequest;
-use Session;
 use Illuminate\Support\Facades\DB;
-
-
+use Session;
+use Hash;
 
 class LoginController extends Controller
 {
@@ -19,28 +18,39 @@ class LoginController extends Controller
 
     public function verify(LoginRequest $request)
     {
-      // Login System
+        // Login System
         $user = DB::table('users')
           ->where('email', $request->Email)
-          ->where('password', $request->Pass)
           ->first();
 
         if($user){
+          $check_password = Hash::check($request->Pass, $user->password, []);
 
-          if($user->type == 1){
-            Session::flash('success', 'Successfully Logged In!' );
+          if($check_password){
             Session::put('id', $user->id);
+            Session::put('username', $user->name);
+            Session::put('logged_in', true);
 
-            return redirect()->route('company.home');
+            if($user->type == 1){
+              Session::put('is_company', true);
+
+              Session::flash('success', 'Successfully Logged In!' );
+              return redirect()->route('company.home');
+            }
+
+            Session::put('is_user', true);
+            Session::flash('success', 'Successfully Logged In!' );
+            return redirect()->route('user.home');
           }
-          else{
-          Session::flash('success', 'Successfully Logged In!' );
-          Session::put('id', $user->id);
-          Session::put('username', $user->name);
 
-          return redirect()->route('user.home');
+          Session::put('logged_in', false);
+          Session::flash('fail', 'Incorrect Credentials, Please Try Again !');
+          return redirect()->back();
         }
-        }
+
+        Session::put('logged_in', false);
+        Session::flash('fail', 'Incorrect Credentials, Please Try Again !');
+        return redirect()->back();
     }
 
     public function logout(){

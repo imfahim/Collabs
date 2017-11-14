@@ -20,9 +20,7 @@ class ContestController extends Controller
      */
     public function index()
     {
-
         $contests = Contest::where('company_id', Session::get('id'))->get();
-
         return view('company.contests.index')->with('contests', $contests);
     }
 

@@ -109,8 +109,8 @@
                   <div class="form-group label-floating">
                       <label class="control-label">Status</label>
                       <select name="status" class="form-control">
-                        <option value="1" {{ ($contest->status === 1) ? 'selected' : '' }}>Closed</option>
-                        <option value="0" {{ ($contest->status === 0) ? 'selected' : '' }}>Opened</option>
+                        <option value="true" {{ ($contest->status === 1) ? 'selected' : '' }}>Closed</option>
+                        <option value="false" {{ ($contest->status === 0) ? 'selected' : '' }}>Opened</option>
                       </select>
                   </div>
               </div>
