@@ -1,9 +1,8 @@
 @extends ('company.layouts.options')
 
 @section('content')
-<a href="{{ URL::previous() }}" class="btn btn-primary pull-right">Back</a><br><br>
+<a href="{{route('invitations')}}" class="btn btn-warning">All Invitations</a><br><br>
 
-<a href="#" class="btn btn-warning">All Invitations</a>
 
 <div class="container-fluid">
 <form method="post">

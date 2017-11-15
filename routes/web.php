@@ -41,8 +41,20 @@ Route::get('/team/reqcancel/{teamid}/{userid}', 'User\TeamController@cancel')->n
 Route::get('/team/memremove/{teamid}/{userid}', 'User\TeamController@memremove')->name('team.memremove');
 
 Route::get('/offers', 'User\OfferController@index')->name('offers');
+Route::get('/offers/accept/{id}', 'User\OfferController@accept')->name('offers.accept');
+Route::get('/offers/decline/{id}', 'User\OfferController@decline')->name('offers.decline');
+Route::get('/offers/details/{id}', 'User\OfferController@companydetails')->name('offers.companydetails');
+
+
 
 Route::get('/hire', 'Company\HireController@index')->name('hire.index');
+Route::post('/hire', 'Company\HireController@searchresult')->name('hire.searchresult');
+Route::get('/hire/userdetails/{id}', 'Company\HireController@userdetails')->name('userdetails');
+Route::post('/hire/invite/', 'Company\HireController@hire')->name('hire.invite');
+Route::get('/hire/invitations', 'Company\HireController@invitelist')->name('invitations');
+
+
+
 
 
 
