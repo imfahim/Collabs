@@ -2,7 +2,7 @@
 
 @section('options')
 <li class="nav-item active" data-toggle="tooltip" data-placement="right" title="Home">
-  <a class="nav-link" href="#">Home</a>
+  <a class="nav-link" href="{{ route('user.home')}}">Home</a>
 </li>
 <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Profile">
   <a class="nav-link" href="{{ route('profile.index')}}">Profile</a>

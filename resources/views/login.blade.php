@@ -59,6 +59,13 @@
 							<p style="color: red;">{{ Session::get('fail') }}</p>
 						@endif
 					</div>
+					<div>
+						@if($errors->any())
+						@foreach($errors->all() as $err)
+						<p>Error: {{$err}}</p>
+						@endforeach
+						@endif
+					</div>
 				</center>
 			</td>
 			<td width="100"></td>
