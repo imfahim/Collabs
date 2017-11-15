@@ -23,7 +23,7 @@
                         </p>
                         <p>{{ $project->details }}</p>
                         <div class="pull-right">
-                          <a href="#" class="btn btn-sm btn-info">Project Details</a>
+                          <a href="{{ route('projects.show', [$project->id]) }}" class="btn btn-sm btn-info">Project Details</a>
                         </div>
                     </div>
                   </div>
@@ -53,7 +53,7 @@
                         </p>
                         <p>{{ $project->details }}</p>
                         <div class="pull-right">
-                          <a href="#" class="btn btn-sm btn-info">Project Details</a>
+                          <a href="{{ route('projects.show', [$project->id]) }}" class="btn btn-sm btn-info">Project Details</a>
                         </div>
                     </div>
                   </div>
