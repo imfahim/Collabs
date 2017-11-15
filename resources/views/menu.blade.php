@@ -12,6 +12,7 @@
 
 <link href="{{ asset('vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<link rel="stylesheet" type="text/css" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
 
 <!-- Custom fonts for this template-->
 <link href="{{ asset('vendor/font-awesome/css/font-awesome.min.css') }}" rel="stylesheet" type="text/css">
@@ -84,7 +85,9 @@
     <script src="{{ asset('js/sb-admin.min.js') }}"></script>
     <!-- Custom scripts for this page-->
     <script src="{{ asset('js/sb-admin-datatables.min.js') }}"></script>
-    <script src="{{ asset('js/sb-admin-charts.min.js') }}"></script>
+    <!--<script src="{{ asset('js/sb-admin-charts.min.js') }}"></script>-->
+    <script src="{{ asset('js/sb-admin-charts.js') }}"></script>
+    <script src="{{ asset('js/main.js') }}"></script>
 
     @yield('page-scripts')
 

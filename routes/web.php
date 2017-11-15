@@ -68,6 +68,8 @@ Route::group(['middleware' => 'access.auth'], function(){
     Route::get('contests', 'User\ContestController@index')->name('user.contests.index');
     Route::post('contests/join', 'User\ContestController@join')->name('user.contests.join');
     Route::post('contests', 'User\ContestController@participate')->name('user.contests.participate');
+
+    Route::get('stats/chart/data', 'User\HomeController@get_chart_data');
   });
 
   Route::group(['prefix' => 'company', 'middleware' => 'access.company'], function(){
@@ -79,6 +81,8 @@ Route::group(['middleware' => 'access.auth'], function(){
     Route::get('review/{participant_id}/project/{project_id}/', 'Company\ReviewController@show')->name('company.review.show');
     Route::post('review/declare', 'Company\ReviewController@declare')->name('company.review.declare');
     Route::post('review/reject', 'Company\ReviewController@reject')->name('company.review.reject');
+
+    Route::get('stats/chart/data', 'User\HomeController@get_chart_data');
   });
 
 });
