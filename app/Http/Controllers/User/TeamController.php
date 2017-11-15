@@ -7,6 +7,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
 use App\Http\Requests\TeamRequest;
 use Session;
+use App\Project;
+use App\Team;
 
 
 class TeamController extends Controller
@@ -198,9 +200,11 @@ class TeamController extends Controller
             ->where('team_user.team_id', '=', $id)
             ->get();
 
+      $projects = Project::where('team_id', $id)->get();
 
       return view('user.team.details')->withLeader($leader)
                                       ->withMembers($members)
+                                      ->withProjects($projects)
                                       ->withTeamid($id);
     }
 
@@ -240,5 +244,9 @@ class TeamController extends Controller
 
 
         return redirect()->route('team');
+    }
+
+    public function projects(){
+
     }
 }
