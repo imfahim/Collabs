@@ -6,7 +6,7 @@
       <div class="card">
         <div class="card-body">
           <div class="pull-left">
-            <a href="{{ route('contests.index') }}"><button type="button" class="btn btn-outline-dark">Back</button></a>
+            <a href="{{ route('contests.index') }}"><button type="button" class="btn btn-primary">Back</button></a>
           </div>
         </div>
       </div>
@@ -25,7 +25,7 @@
             <strong>Participants :</strong>
           </p>
           @if($participants)
-            <table class="table table-striped table-dark" data-form="deleteForm">
+            <table class="table table-striped" data-form="deleteForm">
               <thead>
                 <tr>
                   <th scope="col">Teams</th>
@@ -49,7 +49,7 @@
                         @endif
                       </td>
                       <td>
-                        <a href="{{ route('company.review.show', [$participant['id'], $participant['project_id']]) }}" class="btn btn-sm btn-outline-info" role="button">Project Review</a>
+                        <a href="{{ route('company.review.show', [$participant['id'], $participant['project_id']]) }}" class="btn btn-sm btn-info" role="button">Project Review</a>
                       </td>
                     </tr>
                   @endforeach

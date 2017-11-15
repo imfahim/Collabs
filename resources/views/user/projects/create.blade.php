@@ -6,7 +6,7 @@
       <div class="card">
         <div class="card-body">
           <div class="pull-left">
-            <a href="{{ route('projects.index') }}"><button type="button" class="btn btn-outline-dark">Back</button></a>
+            <a href="{{ route('projects.index') }}"><button type="button" class="btn btn-primary">Back</button></a>
           </div>
         </div>
       </div>
@@ -30,7 +30,7 @@
               <div class="col-md-12">
                   <div class="form-group">
                       <label class="control-label">Under Which Team</label>
-                      <select class="form-control" name="team">
+                      <select class="form-control" style='font-size: 10px;' name="team">
                         @foreach ($teams as $team)
                           <option value="{{ $team->id }}">{{ $team->name }}</option>
                         @endforeach
@@ -39,7 +39,7 @@
               </div>
             </div>
           <div class="pull-right">
-            <button type="submit" class="btn btn-outline-success">Create</button>
+            <button type="submit" class="btn btn-success">Create</button>
           </div>
         </form>
       </div>

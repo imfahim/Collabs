@@ -30,7 +30,7 @@ class TeamController extends Controller
       $my_team=DB::table('teams')
                   ->where('leader_id',session('id'))
                   ->paginate(3);
-
+      Session::put('menu', 'team');
       return view('user.team.index')->withMyteam($my_team)
                                     ->withJoindteam($joind_teams)
                                     ->withRqsts(count($rqsts));

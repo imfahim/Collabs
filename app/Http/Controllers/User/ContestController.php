@@ -33,7 +33,7 @@ class ContestController extends Controller
           ];
         }
       }
-
+      Session::put('menu', 'contest');
       return view('user.contests.index')->with('contests', $contests)->with('teams', $teams)->with('joined_contests', $data_array)->with('has_data', $data_has);
     }
 

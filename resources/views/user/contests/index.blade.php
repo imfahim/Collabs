@@ -2,15 +2,7 @@
 
 @section('content')
   <div class="row">
-    <div class="col-md-12">
-      <div class="card">
-        <div class="card-body">
-          <div class="pull-left">
-            <a href="{{ route('user.contests.index') }}"><button type="button" class="btn btn-outline-dark">Back</button></a>
-          </div>
-        </div>
-      </div>
-    </div>
+
     <div class="col-md-8">
       <div class="card">
         <div class="card-body">
@@ -38,7 +30,7 @@
                       <div class="form-group form-inline">
                         <label class="control-label">Select Your Team</label>
                         <span>&nbsp; &nbsp;</span>
-                        <select class="form-control" name="team">
+                        <select class="form-control" style='font-size: 10px;' name="team">
                             <option value="0"></option>
                           @foreach ($teams as $team)
                             <option value="{{ $team->id }}">{{ $team->name }}</option>
@@ -111,7 +103,7 @@
                   </div>
                 </div>
               </div>
-            @endforeach  
+            @endforeach
           @else
             You have not participating any contests yet !
           @endif

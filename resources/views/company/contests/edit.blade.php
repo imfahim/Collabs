@@ -6,7 +6,7 @@
       <div class="card">
         <div class="card-body">
           <div class="pull-left">
-            <a href="{{ route('contests.index') }}"><button type="button" class="btn btn-outline-dark">Back</button></a>
+            <a href="{{ route('contests.index') }}"><button type="button" class="btn btn-primary">Back</button></a>
           </div>
         </div>
       </div>
@@ -30,11 +30,12 @@
                 </div>
               </div>
               <div class="col-md-6">
+                <label class="control-label">Starts On</label>
                   <div class="form-group label-floating">
-                      <label class="control-label">Starts On</label>
+
                       <div class="col-md-4">
                         <div class="col-md-8">
-                      <select class="form-control" name="start_day">
+                      <select class="form-control" style='font-size: 10px;' name="start_day">
                         @for ($i = 1; $i < 32; $i++)
                             <option value="{{$i}}" {{ ($i == $dates['start_day']) ? ' selected="selected"' : '' }}>{{$i}}</option>
                         @endfor
@@ -46,7 +47,7 @@
                       </div>
                       <div class="col-md-4">
                         <div class="col-md-8">
-                          <select class="form-control" name="start_month">
+                          <select class="form-control" style='font-size: 10px;' name="start_month">
                             @for ($i = 1; $i < 13; $i++)
                                 <option value="{{$i}}" {{ ($i == $dates['start_month']) ? ' selected="selected"' : '' }}>{{$i}}</option>
                             @endfor
@@ -58,7 +59,7 @@
                       </div>
                       <div class="col-md-4">
                       <div class="col-md-8">
-                      <select class="form-control" name="start_year">
+                      <select class="form-control" style='font-size: 10px;' name="start_year">
                         @for ($i = 2018; $i > 2010; $i--)
                             <option value="{{$i}}" {{ ($i == $dates['start_year']) ? ' selected="selected"' : '' }}>{{$i}}</option>
                         @endfor
@@ -68,11 +69,12 @@
                   </div>
               </div>
               <div class="col-md-6">
+                <label class="control-label">Ends On</label>
                   <div class="form-group label-floating">
-                      <label class="control-label">Ends On</label>
+
                       <div class="col-md-4">
                         <div class="col-md-8">
-                      <select class="form-control" name="end_day">
+                      <select class="form-control" style='font-size: 10px;' name="end_day">
                         @for ($i = 1; $i < 32; $i++)
                             <option value="{{$i}}" {{ ($i == $dates['end_day']) ? ' selected="selected"' : '' }}>{{$i}}</option>
                         @endfor
@@ -84,7 +86,7 @@
                       </div>
                       <div class="col-md-4">
                       <div class="col-md-8">
-                      <select class="form-control" name="end_month">
+                      <select class="form-control" style='font-size: 10px;' name="end_month">
                         @for ($i = 1; $i < 13; $i++)
                             <option value="{{$i}}" {{ ($i == $dates['end_month']) ? ' selected="selected"' : '' }}>{{$i}}</option>
                         @endfor
@@ -96,7 +98,7 @@
                       </div>
                       <div class="col-md-4">
                       <div class="col-md-8">
-                      <select class="form-control" name="end_year">
+                      <select class="form-control" style='font-size: 10px;' name="end_year">
                         @for ($i = 2018; $i > 2010; $i--)
                             <option value="{{$i}}" {{ ($i == $dates['end_year']) ? ' selected="selected"' : '' }}>{{$i}}</option>
                         @endfor
@@ -108,7 +110,7 @@
               <div class="col-md-12">
                   <div class="form-group label-floating">
                       <label class="control-label">Status</label>
-                      <select name="status" class="form-control">
+                      <select name="status" style='font-size: 10px;' class="form-control">
                         <option value="true" {{ ($contest->status === 1) ? 'selected' : '' }}>Closed</option>
                         <option value="false" {{ ($contest->status === 0) ? 'selected' : '' }}>Opened</option>
                       </select>
@@ -116,7 +118,7 @@
               </div>
             </div>
             <div class="pull-right">
-              <button type="submit" class="btn btn-outline-success">Save</button>
+              <button type="submit" class="btn btn-success">Save</button>
             </div>
           </form>
         </div>

@@ -26,6 +26,7 @@ class ProfileController extends Controller
         $users = DB::table('users')
                         ->where('id',Session::get('id'))
                         ->first();
+        Session::put('menu', 'profile');
         return view('user.profile.profile')->with('user',$users);
 
       }
@@ -39,7 +40,7 @@ class ProfileController extends Controller
         //  dd($users->occupation);
 
 //aeta to ager cntroooer er :3 ar  db- _te -___-t_______o- join nai..
-
+      Session::put('menu', 'profile');
       return view('user.profile.profile')->with('user', $users);
     }
 

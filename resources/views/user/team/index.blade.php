@@ -17,11 +17,10 @@
       @endif
           <div class="panel-heading">
           <div class="row">
-            <div class="col-md-2" style="font-size:20px;">
+            <div class="col-md-4" style="font-size:20px;">
               <a href="{{route('team.details',[$jin->id])}}">{{$jin->name}}</a>
-
             </div>
-          <div class="col-md-10">
+          <div class="col-md-8">
           Members({{$jin->existing_member}}/{{$jin->total_member}})
           @if($jin->status==1)
             (Disbanded)
@@ -49,11 +48,11 @@
         @endif
               <div class="panel-heading">
                 <div class="row">
-                  <div class="col-md-2" style="font-size:20px;">
+                  <div class="col-md-4" style="font-size:20px;">
                   <a href="{{route('team.details',[$jin->id])}}">{{$jin->name}}</a>
 
                   </div>
-                <div class="col-md-10">
+                <div class="col-md-8">
               Members({{$jin->existing_member}}/{{$jin->total_member}})
               @if($jin->status==1)
                 (Disbanded)

@@ -6,7 +6,7 @@
       <div class="card">
         <div class="card-body">
           <div class="pull-left">
-            <a href="{{ route('projects.index') }}"><button type="button" class="btn btn-outline-dark">Back</button></a>
+            <a href="{{ route('projects.index') }}"><button type="button" class="btn btn-primary">Back</button></a>
           </div>
         </div>
       </div>
@@ -32,7 +32,7 @@
               <div class="col-md-12">
                   <div class="form-group">
                       <label class="control-label">Under Which Team</label>
-                      <select class="form-control" name="team">
+                      <select class="form-control" style='font-size: 10px;' name="team">
                         @foreach ($teams as $team)
                           <option value="{{ $team->id }}" {{ ($team->id === $project->team_id) ? ' selected="selected"' : '' }}>{{ $team->name }}</option>
                         @endforeach
@@ -42,7 +42,7 @@
               <div class="col-md-12">
                   <div class="form-group label-floating">
                       <label class="control-label">Status</label>
-                      <select name="status" class="form-control">
+                      <select name="status" style='font-size: 10px;' class="form-control">
                         <option value="1" {{ ($project->status === 1) ? 'selected' : '' }}>Development Phase</option>
                         <option value="0" {{ ($project->status === 0) ? 'selected' : '' }}>Finished</option>
                       </select>
@@ -50,7 +50,7 @@
               </div>
             </div>
             <div class="pull-right">
-              <button type="submit" class="btn btn-outline-success">Save</button>
+              <button type="submit" class="btn btn-success">Save</button>
             </div>
           </form>
         </div>

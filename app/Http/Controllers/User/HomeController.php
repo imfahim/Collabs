@@ -4,7 +4,7 @@ namespace App\Http\Controllers\User;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-
+use Session;
 use App\User;
 use App\Team;
 use App\Project;
@@ -19,7 +19,7 @@ class HomeController extends Controller
       $teams_count = $this->get_total_teams();
       $projects_count = $this->get_total_projects();
       $contests_count = $this->get_total_contests();
-
+      Session::put('menu', 'home');
       return view('user.home')
         ->with('users_count', $users_count)
         ->with('teams_count', $teams_count)

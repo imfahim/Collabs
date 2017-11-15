@@ -18,7 +18,7 @@ class ProjectController extends Controller
     public function index()
     {
       $projects = Project::where('user_id', Session::get('id'))->with('team')->get();
-      
+      Session::put('menu', 'project');
       return view('user.projects.index')->with('projects', $projects);
     }
 

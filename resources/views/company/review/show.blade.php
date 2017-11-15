@@ -6,7 +6,7 @@
       <div class="card">
         <div class="card-body">
           <div class="pull-left">
-            <a href="{{ route('contests.index') }}"><button type="button" class="btn btn-outline-dark">Back</button></a>
+            <a href="{{ route('contests.index') }}"><button type="button" class="btn btn-primary">Back</button></a>
           </div>
         </div>
       </div>

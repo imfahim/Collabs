@@ -11,7 +11,7 @@ class HireController extends Controller
 {
     //
     public function index(){
-
+      Session::put('menu', 'hire');
       return view('company.hire.index');
     }
 

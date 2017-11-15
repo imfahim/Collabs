@@ -6,14 +6,14 @@
       <div class="card">
         <div class="card-body">
           <div class="pull-right">
-            <a href="{{ route('contests.create') }}"><button type="button" class="btn btn-outline-dark">Create New</button></a>
+            <a href="{{ route('contests.create') }}"><button type="button" class="btn btn-primary">Create New</button></a>
           </div>
         </div>
       </div>
       <div class="card">
         <div class="card-body">
           @if ($contests)
-            <table class="table table-striped table-dark" data-form="deleteForm">
+            <table class="table table-striped" data-form="deleteForm">
               <thead>
                 <tr>
                   <th scope="col">Title</th>
@@ -33,18 +33,18 @@
                     <td>{{ \Carbon\Carbon::parse($contest->close_on)->format('d/m/Y') }}</td>
                     <td>{{ ($contest->status) ? 'Closed' : 'Opened' }}</td>
                     <td>
-                      <div class="btn-toolbar justify-content-between" role="toolbar" aria-label="Toolbar with button groups">
-                        <div class="btn-group" role="group" aria-label="First group">
-                          <a href="{{ route('contests.show', [$contest->id]) }}" class="btn btn-sm btn-outline-success" role="button">Review</a>
-                          <a href="{{ route('contests.edit', [$contest->id]) }}" class="btn btn-sm btn-outline-warning" role="button">Edit</a>
-                          <form class="form-delete" method="POST" action="{{ route('contests.destroy', [$contest->id]) }}">
+                        <div class="btn-group">
+                          <a href="{{ route('contests.show', [$contest->id]) }}" class="btn btn-sm btn-success" role="button">Review</a>
+                          <a href="{{ route('contests.edit', [$contest->id]) }}" class="btn btn-sm btn-warning" role="button">Edit</a>
+                        </td>
+                          <td><form class="form-delete" method="POST" action="{{ route('contests.destroy', [$contest->id]) }}">
         										{{ csrf_field() }}
         										<input type="hidden" name="_method" value="delete" />
         										<input type="hidden" name="id" value="{{ $contest->id }}" />
-        										<input type="submit" class="btn btn-sm btn-outline-danger" role="button" value="Delete"/>
+        										<input type="submit" class="btn btn-sm btn-danger" role="button" value="Delete"/>
         									</form>
                         </div>
-                      </div>
+
                     </td>
                   </tr>
                 @endforeach

@@ -1,17 +1,9 @@
-<!DOCTYPE html>
-<html>
-<head>
-	<title>Profile - Company Manager</title>
-</head>
-<body>
-	<table border="0" width="100%">
-		<tr>
-			<td width="100"></td>
-			<td>
-				<br/>
-				<center>
-				<h3>Company Profile</h3>
-				<?php print_r($company); ?>
+@extends ('company.layouts.options')
+
+@section('content')
+<div class="panel panel-info">
+		<div class="panel-heading"><center>Company Informations</center></div>
+		<div class="panel-body">
 							@if(!isset($company->companyId))
 								<form method = "POST" action = "{{route('companyprofile.store')  }}" >
 								{{ csrf_field() }}
@@ -19,17 +11,17 @@
 								<input type="hidden" name="id" value="{{ $user->id }}" />
 								<input type="hidden" name="_method" value="put" />
 								@endif
-								<table>
+								<table class="table table-striped">
 									<tr>
-										<td>Name: </td>
+										<td style='width:20%; font-weight: bold;'>Name: </td>
 										<td>{{ $company->name}}</td>
 									</tr>
 									<tr>
-										<td>EMAIL: </td>
+										<td style='width:20%; font-weight: bold;'>EMAIL: </td>
 										<td>{{ $company->email }}</td>
 									</tr>
 									<tr>
-										<td>TYPE: </td>
+										<td style='width:20%; font-weight: bold;'>TYPE: </td>
 										@if ($company->type == 0)
 		    						<td>Developer</td>
 										@else
@@ -38,31 +30,26 @@
 									</tr>
 
 									<tr>
-										<td>CITY: </td>
-										<td><input type="text" name="city" value=""></td>
+										<td style='width:20%; font-weight: bold;'>CITY: </td>
+										<td><input type="text" class="form-control" name="city" value=""></td>
 									</tr>
 
 									<tr>
-										<td>CONTACT NO: </td>
-										<td><input type="text" name="contactNo" value=""></td>
+										<td style='width:20%; font-weight: bold;'>CONTACT NO: </td>
+										<td><input type="text" class="form-control"  name="contactNo" value=""></td>
 									</tr>
 
-										<td>WEBSITE: </td>
-										<td><input type="text" name="website" value=""></td>
+										<td style='width:20%; font-weight: bold;'>WEBSITE: </td>
+										<td><input type="text" class="form-control"  name="website" value=""></td>
 									</tr>
 									<tr>
-										<td>ABOUT: </td>
+										<td style='width:20%; font-weight: bold;'>ABOUT: </td>
 										<td>
-											<textarea name="about"></textarea>
+											<textarea name="about" class="form-control" ></textarea>
 										</td>
 									</tr>
-
-										<td></td>
-
-										<td></td>
-									</tr>
 								</table>
-								<input type="submit" value="Update">
+								<input type="submit" class="btn btn-warning" value="Update">
 							</form>
 							@else
 							<form method ="POST" action = "{{ route('companyprofile.update', [$company->id]) }}" >
@@ -70,17 +57,17 @@
 							<input type="hidden" name="id" value="{{ $company->id }}" />
 							{{ csrf_field() }}
 
-															<table>
+															<table class="table table-striped">
 																<tr>
-																	<td>Name: </td>
+																	<td style='width:20%; font-weight: bold;'>Name: </td>
 																	<td>{{ $company->name}}</td>
 																</tr>
 																<tr>
-																	<td>EMAIL: </td>
+																	<td style='width:20%; font-weight: bold;'>EMAIL: </td>
 																	<td>{{ $company->email }}</td>
 																</tr>
 																<tr>
-																	<td>TYPE: </td>
+																	<td style='width:20%; font-weight: bold;'>TYPE: </td>
 																	@if ($company->type == 0)
 									    						<td>Developer</td>
 																	@else
@@ -89,37 +76,34 @@
 																</tr>
 
 																<tr>
-																	<td>CITY: </td>
-																	<td><input type="text" name="city" value="{{ $company->city }}"></td>
+																	<td style='width:20%; font-weight: bold;'>CITY: </td>
+																	<td><input type="text" class="form-control"  name="city" value="{{ $company->city }}"></td>
 																</tr>
 
 																<tr>
-																	<td>CONTACT NO: </td>
-																	<td><input type="text" name="contactNo" value="{{ $company->contactNo }}"></td>
+																	<td style='width:20%; font-weight: bold;'>CONTACT NO: </td>
+																	<td><input type="text" class="form-control"  name="contactNo" value="{{ $company->contactNo }}"></td>
 																</tr>
 
-																	<td>WEBSITE: </td>
-																	<td><input type="text" name="website" value="{{  $company->website }}"></td>
+																	<td style='width:20%; font-weight: bold;'>WEBSITE: </td>
+																	<td><input type="text" class="form-control"  name="website" value="{{  $company->website }}"></td>
 																</tr>
 																<tr>
-																	<td>ABOUT: </td>
+																	<td style='width:20%; font-weight: bold;'>ABOUT: </td>
 																	<td>
-																		<textarea name="about">{{ $company->about }}</textarea>
+																		<textarea name="about" class="form-control" >{{ $company->about }}</textarea>
 																	</td>
 																</tr>
 
-																	<td></td>
-
-																	<td></td>
-																</tr>
 															</table>
-															<input type="submit" value="Update">
+															<input type="submit" class="btn btn-warning" value="Update">
 														</form>
 														@endif
-				</center>
+
 			</td>
 			<td width="100"></td>
 		</tr>
 	</table>
-</body>
-</html>
+</div>
+</div>
+@endsection

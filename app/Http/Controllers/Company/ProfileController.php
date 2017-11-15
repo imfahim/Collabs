@@ -27,6 +27,7 @@ class ProfileController extends Controller
         $company = DB::table('users')
                         ->where('id',Session::get('id'))
                         ->first();
+        Session::put('menu', 'profile');
         return view('company.profile.profile')->with('company',$company);
 
       }
@@ -39,7 +40,7 @@ class ProfileController extends Controller
 
 
 //aeta to ager cntroooer er :3 ar  db- _te -___-t_______o- join nai..
-
+      Session::put('menu', 'profile');
       return view('company.profile.profile')->with('company', $company);
     }
 

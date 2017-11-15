@@ -15,6 +15,7 @@ class OfferController extends Controller
                 ->join('users','users.id','=','hire.company_id')
                 ->where('hire.user_id',session('id'))
                 ->get();
+      Session::put('menu', 'offers');
       return view('user.offer.index')->withOffers($offers);
     }
 
