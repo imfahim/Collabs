@@ -7,6 +7,7 @@
   <br />
   <div class="row">
     <div class="col-md-6">
+      @if($parbe==1)
       @if ($projects)
         <div class="card">
           <div class="card-body">
@@ -98,6 +99,7 @@
           </div>
         </div>
       @endif
+      @endif
     </div>
     <div class="col-md-6">
       @if($leader->id == session('id'))
@@ -116,10 +118,10 @@
       <div class="media">
         <div class="media-body">
           <h4 class="media-heading">{{$loop->iteration}}. {{$mem->name}}
-          @if($mem->invite==0)
+          @if($mem->invite==0 && $leader->id==session('id'))
             (invited)
             <a href="{{route('team.reqcancel',[$teamid,$mem->id])}}" class="btn btn-danger pull-right">Cancel</a>
-          @else
+          @elseif($leader->id==session('id'))
           <a href="{{route('team.memremove',[$teamid,$mem->id])}}" class="btn btn-danger pull-right">Remove</a>
           @endif</h4>
           <p>{{$mem->email}}</p>

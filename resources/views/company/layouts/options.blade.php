@@ -11,6 +11,6 @@
           <a class="nav-link" href="{{ route('contests.index') }}">Contest</a>
         </li>
         <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Hire">
-          <a class="nav-link" href="#">Hire</a>
+          <a class="nav-link" href="{{ route('hire.index') }}">Hire</a>
         </li>
 @endsection

@@ -13,6 +13,9 @@
 <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Project">
   <a class="nav-link" href="{{ route('projects.index') }}">Project</a>
 </li>
+<li class="nav-item" data-toggle="tooltip" data-placement="right" title="Offers">
+  <a class="nav-link" href="{{ route('offers') }}">Offers</a>
+</li>
 <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Divider">
   <hr />
 </li>

@@ -194,18 +194,31 @@ class TeamController extends Controller
                   ->join('users','users.id','=','teams.leader_id')
                   ->where('teams.id',$id)
                   ->first();
+                  //ae team er leader ber krlo...
 
       $members=DB::table('team_user')
               ->join('users', 'users.id', '=', 'team_user.user_id')
             ->where('team_user.team_id', '=', $id)
             ->get();
+            //ae team er members ber krlo
+    $parbe=0;
+     foreach($members as $mem){
+       if($mem->id == session('id')){
+         $parbe=1;
+         break;
+       }
+     }
+     if($leader->leader_id==session('id')){
+       $parbe=1;
+     }
 
-      $projects = Project::where('team_id', $id)->get();
+      $projects = Project::where('team_id', $id)->get();//projects
 
-      return view('user.team.details')->withLeader($leader)
-                                      ->withMembers($members)
+      return view('user.team.details')->withLeader($leader) //leader pass krlo
+                                      ->withMembers($members)//member list pass krlo
                                       ->withProjects($projects)
-                                      ->withTeamid($id);
+                                      ->withParbe($parbe)
+                                      ->withTeamid($id);//with team id
     }
 
     public function update(Request $request)

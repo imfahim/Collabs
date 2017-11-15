@@ -40,6 +40,9 @@ Route::get('/team/decline/{id}', 'User\TeamController@reqdecline')->name('team.d
 Route::get('/team/reqcancel/{teamid}/{userid}', 'User\TeamController@cancel')->name('team.reqcancel');
 Route::get('/team/memremove/{teamid}/{userid}', 'User\TeamController@memremove')->name('team.memremove');
 
+Route::get('/offers', 'User\OfferController@index')->name('offers');
+
+Route::get('/hire', 'Company\HireController@index')->name('hire.index');
 
 
 
