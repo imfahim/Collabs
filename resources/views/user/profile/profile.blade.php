@@ -3,6 +3,7 @@
 @section('title', ' | Developer Profile')
 
 @section('content')
+<a href="{{ route('user.pass.change') }}" class="btn btn-primary">Change Password</a>
 <div class="panel panel-info">
 		<div class="panel-heading"><center>Profile</center></div>
 		<div class="panel-body">

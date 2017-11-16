@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
 use Session;
+use App\User;
 use Carbon\Carbon;
 class ProfileController extends Controller
 {
@@ -134,6 +135,7 @@ class ProfileController extends Controller
           ->where('id', $request->input('id'))
           ->update($updateUser);
 
+
       return redirect()->route('profile.index');
     }
 
@@ -146,5 +148,30 @@ class ProfileController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function showchangepass(){
+      return view('user.profile.changepass');
+    }
+
+    public function changepass(Request $request){
+      // validate
+      $this->validate($request,[
+        'pass' => 'required|min:6',
+        'conpass' => 'required|same:pass',
+
+        ]);
+
+
+      $user = User::find(Session::get('id'));
+
+      if($user){
+        $user->password = bcrypt($request->pass);
+
+        $user->save();
+      }
+
+      Session::flash('success', 'Password Successfully changed !');
+      return redirect()->route('profile.index');
     }
 }

@@ -29,6 +29,8 @@ Route::group(['middleware' => 'access.auth'], function(){
     Route::get('/', 'User\HomeController@index')->name('user.home');
 
     Route::resource('profile', 'User\ProfileController', ['except' => 'show']);
+    Route::get('profile/change/password', 'User\ProfileController@showchangepass')->name('user.pass.change');
+    Route::post('profile/change/password', 'User\ProfileController@changepass')->name('user.pass.changing');
     Route::resource('projects', 'User\ProjectController');
 
     Route::get('contests', 'User\ContestController@index')->name('user.contests.index');

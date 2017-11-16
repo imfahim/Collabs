@@ -4,7 +4,7 @@
 
 @section('content')
 @if(count($users)==0)
-No details to show
+Unverified User!
 @else
 <a href="{{ URL::previous() }}" class="btn btn-primary">Back</a><br><br>
 <div class="container">
