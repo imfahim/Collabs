@@ -2,13 +2,14 @@
 <html>
 <head>
 	<title>Login</title>
+	<link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet">
 </head>
 <body>
 	<table border="0" width="100%">
 		<tr>
 			<td width="100"></td>
 			<td align="center">
-				<h1>Login Page</h1>
+				<h1>Login</h1>
 			</td>
 			<td width="100"></td>
 		</tr>
@@ -23,32 +24,43 @@
 			<td width="100"></td>
 			<td>
 				<br/>
+				<br>
 				<center>
-				<h3>Login</h3>
+					<div class="panel panel-default" style="background-color:#343A40;"><br><br>
+	  <div class="panel-body">
 					<form method="post" action="{{route('login.verify')}}">
 						{{ csrf_field() }}
 						<table>
 							<tr>
-								<td>Email: </td>
-								<td><input type="text" name="Email"></td>
-							</tr>
-							<tr>
-								<td>PASSWORD: </td>
-								<td><input type="password" name="Pass"></td>
-							</tr>
-							<tr>
 								<td></td>
-								<td><input type="submit" value="Login"></td>
+								<td>
+									<div class="input-group">
+								    <span class="input-group-addon"><label style="margin-right:29px">Email:</label></span>
+								    <input type="text" class="form-control" name="Email" placeholder="Email">
+								  </div>
 							</tr>
 							<tr>
 								<td></td>
 								<td>
-									<br/>
-									Click <a href="{{route('register')}}">here</a> to register
+									<div class="input-group">
+									<span class="input-group-addon"><label>Password:</label></span>
+									<input type="password" class="form-control" name="Pass" placeholder="Password">
+								</div>
+							</tr>
+							<tr>
+								<td></td>
+								<td><br><center><input type="submit" class="btn btn-success" value="Login"></center></td>
+							</tr>
+							<tr>
+								<td></td>
+								<td>
+									<br><label style="margin-left:10px">Not A Member? Click <a href="{{route('register')}}">here</a> to register</label>
 								</td>
 							</tr>
 						</table>
 					</form>
+				</div>
+			</div>
 					<br/>
 					<br/>
 					<div>
@@ -73,3 +85,9 @@
 	</table>
 </body>
 </html>
+<style>
+body{
+	background-color:#343A40;
+	color:white;
+}
+</style>
