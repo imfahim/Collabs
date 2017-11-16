@@ -1,5 +1,7 @@
 @extends ('company.layouts.options')
 
+@section('title', ' | Hires - Invitations')
+
 @section('content')
 <a href="{{ URL::previous() }}" class="btn btn-primary">Back</a><br><br>
 @if(count($users)==0)

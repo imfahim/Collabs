@@ -17,7 +17,9 @@ class ReviewController extends Controller
       // to check this contest is belong to the owner or not
       $project = Project::find($project_id);
 
-      return view('company.review.show')->with('project', $project)->with('participant_id', $participant_id);
+      $project_extra = json_decode($project->extra);
+
+      return view('company.review.show')->with('project', $project)->with('participant_id', $participant_id)->with('extra', $project_extra);
     }
 
     public function declare(Request $request){

@@ -1,5 +1,7 @@
 @extends ('user.layouts.options')
 
+@section('title', ' | Developer Profile')
+
 @section('content')
 <div class="panel panel-info">
 		<div class="panel-heading"><center>Profile</center></div>

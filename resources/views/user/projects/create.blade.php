@@ -1,5 +1,7 @@
 @extends ('user.layouts.options')
 
+@section('title', ' | Projects - Create')
+
 @section('content')
   <div class="row">
     <div class="col-md-12">

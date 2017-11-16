@@ -7,12 +7,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta name="description" content="">
   <meta name="author" content="">
-  <title>Collab</title>
+  <title>Collabs @yield('title')</title>
   <!-- Bootstrap core CSS-->
 
 <link href="{{ asset('vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-<link rel="stylesheet" type="text/css" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
+<link rel="stylesheet" href="{{ asset('bootstrap-v3.3.7/css/bootstrap.min.css') }}">
+<link rel="stylesheet" type="text/css" href="{{ asset('css/font-awesome.min.css') }}">
 
 <!-- Custom fonts for this template-->
 <link href="{{ asset('vendor/font-awesome/css/font-awesome.min.css') }}" rel="stylesheet" type="text/css">
@@ -21,8 +21,8 @@
 <!-- Custom styles for this template-->
 <link href="{{ asset('css/style.css') }}" rel="stylesheet">
 <!-- Include Bootstrap Datepicker -->
-<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/css/datepicker.min.css" />
-<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/css/datepicker3.min.css" />
+<link rel="stylesheet" href="{{ asset('css/datepicker.min.css') }}" />
+<link rel="stylesheet" href="{{ asset('css/datepicker3.min.css') }}" />
 
 @yield('styles')
 
@@ -50,16 +50,11 @@
   </nav>
   <div class="content-wrapper">
     <div class="container-fluid">
-
-
-@if(Session::has('msg'))
-<div class="alert alert-success alert-dismissable">
-    <a href="#" class="close" data-dismiss="alert" aria-label="close">×</a>
-    <strong>Success!</strong> {{Session::get('msg')}}
-  </div>
-@endif
-
-
+      <nav class="navbar navbar-default navbar-static-top">
+        <div class="container">
+          <p class="navbar-text">Signed in as <strong>{{ (Session::has('username')) ? Session::get('username') : 'No Name' }}</strong></p>
+        </div>
+      </nav>
 
 @include('alerts')
 
@@ -92,7 +87,7 @@
     <script src="{{ asset('js/sb-admin-charts.js') }}"></script>
     <script src="{{ asset('js/main.js') }}"></script>
 
-    <script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/js/bootstrap-datepicker.min.js"></script>
+    <script src="{{ asset('js/bootstrap-datepicker.min.js') }}"></script>
 
     @yield('page-scripts')
 

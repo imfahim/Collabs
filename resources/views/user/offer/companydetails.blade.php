@@ -1,5 +1,7 @@
 @extends ('user.layouts.options')
 
+@section('title', ' | Offers - Company Detail')
+
 @section('content')
 @if(count($company)==0)
 No details to show

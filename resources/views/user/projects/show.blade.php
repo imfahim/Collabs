@@ -1,5 +1,7 @@
 @extends ('user.layouts.options')
 
+@section('title', ' | Projects - Show')
+
 @section('content')
   <div class="row">
     <div class="col-md-12">
@@ -29,13 +31,21 @@
               Github Link :
             </p>
             <p>
-              <a href="{{ $extra->github }}" target="_blank" alt="#">Click Here</a> to check out !
+              @if($extra->github !== '')
+                <a href="{{ $extra->github }}" target="_blank" alt="#">Click Here</a> to check out !
+              @else
+                No github link given !
+              @endif
             </p>
             <p class="lead">
               Youtube Link :
             </p>
             <p>
-              <a href="{{ $extra->youtube }}" target="_blank" alt="#">Click Here</a> to check out !
+              @if($extra->youtube !== '')
+                <a href="{{ $extra->youtube }}" target="_blank" alt="#">Click Here</a> to check out !
+              @else
+                No youtube link given !
+              @endif
             </p>
           @else
             No Demo Info Given !

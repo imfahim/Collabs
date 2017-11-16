@@ -1,5 +1,7 @@
 @extends ('company.layouts.options')
 
+@section('title', ' | Company Profile')
+
 @section('content')
 <div class="panel panel-info">
 		<div class="panel-heading"><center>Company Informations</center></div>

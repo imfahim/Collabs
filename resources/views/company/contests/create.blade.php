@@ -1,5 +1,7 @@
 @extends ('company.layouts.options')
 
+@section('title', ' | Contests - Create')
+
 @section('content')
   <div class="row">
     <div class="col-md-12">

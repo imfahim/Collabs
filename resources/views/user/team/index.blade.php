@@ -1,5 +1,7 @@
 @extends ('user.layouts.options')
 
+@section('title', ' | Teams')
+
 @section('content')
 <div class="container-fluid">
   <a href="{{route('team.create')}}" class="btn btn-primary">Create your Team</a>

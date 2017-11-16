@@ -1,5 +1,7 @@
 @extends ('user.layouts.options')
 
+@section('title', ' | Contests')
+
 @section('styles')
   <!-- Form Validation Parsley  -->
   <link rel="stylesheet" type="text/css" href="{{ asset('css/parsley.css') }}" />

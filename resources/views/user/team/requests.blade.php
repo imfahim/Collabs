@@ -1,5 +1,7 @@
 @extends ('user.layouts.options')
 
+@section('title', ' | Teams - Requests')
+
 @section('content')
 <a href="{{ URL::previous() }}" class="btn btn-primary">Back</a><br><br>
   @if($has!=0)

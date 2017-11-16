@@ -1,5 +1,7 @@
 @extends ('company.layouts.options')
 
+@section('title', ' | Hires')
+
 @section('content')
 <a href="{{route('invitations')}}" class="btn btn-warning">All Invitations</a><br><br>
 

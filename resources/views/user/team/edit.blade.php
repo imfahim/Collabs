@@ -1,5 +1,7 @@
 @extends ('user.layouts.options')
 
+@section('title', ' | Teams - Edit')
+
 @section('content')
 <div class="container-fluid">
   <a href="{{ URL::previous() }}" class="btn btn-primary">Back</a><br><br>

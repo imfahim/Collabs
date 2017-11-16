@@ -25,7 +25,30 @@
             <strong>Additional Details :</strong>
           </p>
           <p>
-            sadasdas dasd asd
+            @if($extra)
+              <p class="lead">
+                Github Link :
+              </p>
+              <p>
+                @if($extra->github !== '')
+                  <a href="{{ $extra->github }}" target="_blank" alt="#">Click Here</a> to check out !
+                @else
+                  No github link given !
+                @endif
+              </p>
+              <p class="lead">
+                Youtube Link :
+              </p>
+              <p>
+                @if($extra->youtube !== '')
+                  <a href="{{ $extra->youtube }}" target="_blank" alt="#">Click Here</a> to check out !
+                @else
+                  No youtube link given !
+                @endif
+              </p>
+            @else
+              No Demo Info Given !
+            @endif
           </p>
         </div>
       </div>

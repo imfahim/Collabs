@@ -15,7 +15,7 @@
             <p class="lead">
               <strong>Contest Details :</strong>
             </p>
-            <p>{{ $contest->title }}</p>
+            <p class="lead">{{ $contest->title }}</p>
             <p>{{ $contest->description }}</p>
         </div>
       </div>
@@ -55,6 +55,8 @@
                   @endforeach
               </tbody>
             </table>
+          @else
+            No Participants Yet !
           @endif
         </div>
       </div>

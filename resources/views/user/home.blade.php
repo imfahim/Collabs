@@ -1,7 +1,8 @@
 @extends ('user.layouts.options')
 
+@section('title', ' | Developer Home')
+
 @section('content')
-User Home
 <div class="row">
   <div class="col-lg-3 col-sm-6">
     <div class="circle-tile ">

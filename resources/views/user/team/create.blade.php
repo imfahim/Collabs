@@ -1,5 +1,7 @@
 @extends ('user.layouts.options')
 
+@section('title', ' | Teams - Create')
+
 @section('content')
 
 <div class="container-fluid">

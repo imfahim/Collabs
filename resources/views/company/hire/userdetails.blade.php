@@ -1,5 +1,7 @@
 @extends ('company.layouts.options')
 
+@section('title', ' | Hires - User Detail')
+
 @section('content')
 @if(count($users)==0)
 No details to show

@@ -1,5 +1,7 @@
 @extends ('user.layouts.options')
 
+@section('title', ' | Offers')
+
 @section('content')
 @if(count($offers)==0)
 No Job Offers Yet
