@@ -58,7 +58,7 @@ class TeamController extends Controller
       ->where('team_id', $id)
       ->delete();
       DB::table('teams')
-      ->where('id', $teamid)
+      ->where('id', $id)
       ->decrement('existing_member');
       Session::flash('success', 'Declined!');
 
@@ -146,7 +146,7 @@ class TeamController extends Controller
         }
       }
       else if($userid==session('id')){
-        Session::flash('fail', 'Cant invite urself dumbfuck!');
+        Session::flash('fail', 'Cant invite yourself!');
         return redirect()->route('team.details',[$teamid]);
       }
       else if($thisteam->existing_member >= $thisteam->total_member){
