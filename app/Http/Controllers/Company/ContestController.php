@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Company;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+
+use App\Http\Requests\ContestRequest;
 use App\Contest;
 use App\Team;
 use App\Project;
@@ -41,10 +43,13 @@ class ContestController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(ContestRequest $request)
     {
-        $start_date = Carbon::createFromDate($request->start_year, $request->start_month, $request->start_day, 'Asia/Dhaka');
-        $end_date = Carbon::createFromDate($request->end_year, $request->end_month, $request->end_day, 'Asia/Dhaka');
+        $new_start_date = str_replace('/', '-', $request->start_date);
+        $start_date = Carbon::createFromFormat('d-m-Y', $new_start_date)->format('Y-m-d');
+
+        $new_end_date = str_replace('/', '-', $request->end_date);
+        $end_date = Carbon::createFromFormat('d-m-Y', $new_end_date)->format('Y-m-d');
 
         $contest = new Contest;
 
@@ -113,6 +118,15 @@ class ContestController extends Controller
             $contest = Contest::findOrFail($id);
 
             if($contest->company_id === Session::get('id')){
+
+              /*
+              $old_start_date = str_replace('-', '/', $contest->start_on);
+              $start_date = Carbon::createFromFormat('Y-m-d', $old_start_date)->format('d-m-Y');
+
+              $old_end_date = str_replace('-', '/', $contest->close_on);
+              $end_date = Carbon::createFromFormat('Y-m-d', $old_end_date)->format('d-m-Y');
+              */
+              /*
               // Dates
               $start_date = explode('-', $contest->start_on);
               $end_date = explode('-', $contest->close_on);
@@ -125,8 +139,16 @@ class ContestController extends Controller
                 'end_month' => $end_date[1],
                 'end_day' => $end_date[2]
               ];
+              */
 
-              return view('company.contests.edit')->with('contest', $contest)->with('dates', $dates);
+              /*
+              $dates = [
+                'start_date' => $start_date,
+                'end_date' => $end_date
+              ];
+              */
+
+              return view('company.contests.edit')->with('contest', $contest);
             }
 
             Session::flash('fail', 'Your requested contest does not exist !');
@@ -146,21 +168,24 @@ class ContestController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request)
+    public function update(ContestRequest $request)
     {
         // company id checking ta middleware er maddhome korte hobe pore
 
         $contest = Contest::find($request->id);
 
-        $start_date = Carbon::createFromDate($request->start_year, $request->start_month, $request->start_day, 'Asia/Dhaka');
-        $end_date = Carbon::createFromDate($request->end_year, $request->end_month, $request->end_day, 'Asia/Dhaka');
+        $new_start_date = str_replace('/', '-', $request->start_date);
+        $start_date = Carbon::createFromFormat('d-m-Y', $new_start_date)->format('Y-m-d');
+
+        $new_end_date = str_replace('/', '-', $request->end_date);
+        $end_date = Carbon::createFromFormat('d-m-Y', $new_end_date)->format('Y-m-d');
 
         $contest->company_id = Session::get('id');
         $contest->title = $request->title;
         $contest->description = $request->description;
         $contest->start_on = $start_date;
         $contest->close_on = $end_date;
-        $contest->status = $request->status;
+        $contest->status = ($request->status) ? 0 : 1;
 
         $contest->save();
 

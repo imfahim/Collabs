@@ -61,7 +61,7 @@ No details to show
 
   <form method="POST" action="{{route('hire.invite')}}">
     {{ csrf_field() }}
-    <input type="hidden" name="user_id" value="{{ $users->id }}" />
+    <input type="hidden" name="user_id" value="{{ $users->userId }}" />
     <div class="form-group">
  <label for="comment">Details:</label>
  <textarea class="form-control" rows="5" name="details"></textarea>

@@ -31,21 +31,21 @@
 
 									<tr>
 										<td style='width:20%; font-weight: bold;'>CITY: </td>
-										<td><input type="text" class="form-control" name="city" value=""></td>
+										<td><input type="text" class="form-control" name="city" value="{{ old('city') }}"></td>
 									</tr>
 
 									<tr>
 										<td style='width:20%; font-weight: bold;'>CONTACT NO: </td>
-										<td><input type="text" class="form-control"  name="contactNo" value=""></td>
+										<td><input type="text" class="form-control"  name="contactNo" value="{{ old('contactNo') }}"></td>
 									</tr>
 
 										<td style='width:20%; font-weight: bold;'>WEBSITE: </td>
-										<td><input type="text" class="form-control"  name="website" value=""></td>
+										<td><input type="text" class="form-control"  name="website" value="{{ old('website') }}"></td>
 									</tr>
 									<tr>
 										<td style='width:20%; font-weight: bold;'>ABOUT: </td>
 										<td>
-											<textarea name="about" class="form-control" ></textarea>
+											<textarea name="about" class="form-control" >{{ old('about') }}</textarea>
 										</td>
 									</tr>
 								</table>

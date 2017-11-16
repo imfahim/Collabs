@@ -60,9 +60,10 @@ class ProfileController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(UserRequest $request)
     {
-          $dOB = Carbon::createFromFormat('Y-m-d', $request->dOB);
+          $new_dOB = str_replace('/', '-', $request->dOB);
+          $dOB = Carbon::createFromFormat('d-m-Y', $new_dOB)->format('Y-m-d');
 
           $id =DB::table('userdetails')->insertGetId(
                   ['userId' => $request->session()->get('id'),
@@ -112,7 +113,7 @@ class ProfileController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request)
+    public function update(UserRequest $request)
     {
 
 

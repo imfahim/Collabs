@@ -16,7 +16,7 @@ class ContestController extends Controller
       $contests = Contest::all();
       $teams = Team::where('leader_id', Session::get('id'))->get(['id', 'name']);
 
-      $participations = RelContestUser::where('user_id', Session::get('id'))->get(['contest_id', 'team_id', 'project_id', 'status']);
+      $participations = RelContestUser::where('user_id', Session::get('id'))->get(['id', 'contest_id', 'team_id', 'project_id', 'status']);
 
       $data_array = array();
       $data_has = false;
@@ -26,6 +26,7 @@ class ContestController extends Controller
 
         foreach ($participations as $participation) {
           $data_array[] = [
+            'id' => $participation->id,
             'contest_name' => Contest::where('id', $participation->contest_id)->first()['title'],
             'team_name' => Team::where('id', $participation->team_id)->first()['name'],
             'project_name' => Project::where('id', $participation->project_id)->first()['name'],
@@ -33,6 +34,7 @@ class ContestController extends Controller
           ];
         }
       }
+
       Session::put('menu', 'contest');
       return view('user.contests.index')->with('contests', $contests)->with('teams', $teams)->with('joined_contests', $data_array)->with('has_data', $data_has);
     }
@@ -51,6 +53,11 @@ class ContestController extends Controller
     }
 
     public function participate(Request $request){
+
+      $this->validate($request, [
+        'about' => 'nullable|max:500'
+        ]);
+
       $contest_user = new RelContestUser;
 
       $contest_user->user_id = Session::get('id');
@@ -62,6 +69,13 @@ class ContestController extends Controller
       $contest_user->save();
 
       Session::flash('success', 'Your Participation From is Successfully Submitted !');
+      return redirect()->route('user.contests.index');
+    }
+
+    public function cancel(Request $request){
+      RelContestUser::destroy($request->id);
+
+      Session::flash('success', 'Your Participation is Successfully Cancelled !');
       return redirect()->route('user.contests.index');
     }
 }

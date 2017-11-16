@@ -12,7 +12,6 @@ User Home
       </div>
     </div>
   </div>
-
   <div class="col-lg-3 col-sm-6">
     <div class="circle-tile ">
       <a href="#"><div class="circle-tile-heading red"><i class="fa fa-users fa-fw fa-3x"></i></div></a>
@@ -44,11 +43,27 @@ User Home
 
     <div class="card mb-3">
       <div class="card-header">
-        <i class="fa fa-area-chart"></i> Teams Engagements</div>
-      <div class="card-body"><div class="chartjs-size-monitor" style="position: absolute; left: 0px; top: 0px; right: 0px; bottom: 0px; overflow: hidden; pointer-events: none; visibility: hidden; z-index: -1;"><div class="chartjs-size-monitor-expand" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:1000000px;height:1000000px;left:0;top:0"></div></div><div class="chartjs-size-monitor-shrink" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:200%;height:200%;left:0; top:0"></div></div></div>
-        <canvas id="myAreaChart" width="965" height="289" class="chartjs-render-monitor" style="display: block; width: 965px; height: 289px;"></canvas>
+        <i class="fa fa-trophy"></i> Contest Winners</div>
+      <div class="card-body">
+        @if($winners !== null)
+          @foreach ($winners as $winner)
+            <div class="jumbotron">
+              <div class="container">
+                <h4>Contest : {{ $winner['contest_name'] }}</h4>
+                <p class="lead">Winning Team : {{ $winner['team_name'] }}</p>
+                <p><span class="label label-success">Winner</span></p>
+              </div>
+            </div>
+          @endforeach
+        @else
+          <div class="jumbotron">
+            <div class="container">
+              <p class="lead">No Winners Yet !</p>
+            </div>
+          </div>
+        @endif
       </div>
-      <div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div>
+      <div class="card-footer small text-muted">Thanks for participating !</div>
     </div>
   </div>
 </div>

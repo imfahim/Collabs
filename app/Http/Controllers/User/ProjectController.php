@@ -4,6 +4,8 @@ namespace App\Http\Controllers\User;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+
+use App\Http\Requests\ProjectRequest;
 use App\Project;
 use App\Team;
 use Session;
@@ -39,14 +41,20 @@ class ProjectController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(ProjectRequest $request)
     {
+      $extra = [
+        'github' => $request->github,
+        'youtube' => $request->youtube,
+      ];
+
       $project = new Project;
 
       $project->user_id = Session::get('id');
       $project->team_id = $request->team;
       $project->name = $request->name;
       $project->details = $request->details;
+      $project->extra = json_encode($extra, true);
 
       $project->save();
 
@@ -67,7 +75,9 @@ class ProjectController extends Controller
           $project = Project::findOrFail($id);
 
           if($project->user_id === Session::get('id')){
-            return view('user.projects.show')->with('project', $project);
+            $project_extra = json_decode($project->extra);
+
+            return view('user.projects.show')->with('project', $project)->with('extra', $project_extra);
           }
 
           Session::flash('fail', 'Your requested project does not exist !');
@@ -93,9 +103,10 @@ class ProjectController extends Controller
           $project = Project::findOrFail($id);
 
           if($project->user_id === Session::get('id')){
+            $project_extra = json_decode($project->extra);
             $teams = Team::where('leader_id', Session::get('id'))->get(['id', 'name']);
 
-            return view('user.projects.edit')->with('project', $project)->with('teams', $teams);
+            return view('user.projects.edit')->with('project', $project)->with('teams', $teams)->with('extra', $project_extra);
           }
 
           Session::flash('fail', 'Your requested project does not exist !');
@@ -115,9 +126,13 @@ class ProjectController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(ProjectRequest $request, $id)
     {
       // user id checking ta middleware er maddhome korte hobe pore
+      $extra = [
+        'github' => $request->github,
+        'youtube' => $request->youtube,
+      ];
 
       $project = Project::find($request->id);
 
@@ -125,6 +140,7 @@ class ProjectController extends Controller
       $project->team_id = $request->team;
       $project->name = $request->name;
       $project->details = $request->details;
+      $project->extra = json_encode($extra, true);
       $project->status = $request->status;
 
       $project->save();

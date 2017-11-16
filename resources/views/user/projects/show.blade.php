@@ -15,7 +15,7 @@
             <p class="lead">
               <strong>Project Details :</strong>
             </p>
-            <p>{{ $project->name }}</p>
+            <p class="lead">{{ $project->name }}</p>
             <p>{{ $project->details }}</p>
         </div>
       </div>
@@ -24,10 +24,24 @@
           <p class="lead">
             <strong>Project Demo Details :</strong>
           </p>
-          Not Yet !
+          @if($extra)
+            <p class="lead">
+              Github Link :
+            </p>
+            <p>
+              <a href="{{ $extra->github }}" target="_blank" alt="#">Click Here</a> to check out !
+            </p>
+            <p class="lead">
+              Youtube Link :
+            </p>
+            <p>
+              <a href="{{ $extra->youtube }}" target="_blank" alt="#">Click Here</a> to check out !
+            </p>
+          @else
+            No Demo Info Given !
+          @endif
         </div>
       </div>
-
     </div>
   </div>
 @endsection

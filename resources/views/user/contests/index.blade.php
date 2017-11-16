@@ -1,5 +1,10 @@
 @extends ('user.layouts.options')
 
+@section('styles')
+  <!-- Form Validation Parsley  -->
+  <link rel="stylesheet" type="text/css" href="{{ asset('css/parsley.css') }}" />
+@endsection
+
 @section('content')
   <div class="row">
 
@@ -19,38 +24,40 @@
                 <div class="card-header">
 
                 </div>
-                <div class="card-body">
-                  <h4 class="card-title">{{ $contest->title }}</h4>
-                  <p class="card-text">{{ $contest->description }}</p>
-                  <hr />
-                  <form method="POST" action="{{ route('user.contests.join') }}">
-                    {{ csrf_field() }}
-                    <input type="hidden" name="id" value="{{ $contest->id }}" />
-                    <div class="pull-left">
-                      <div class="form-group form-inline">
-                        <label class="control-label">Select Your Team</label>
-                        <span>&nbsp; &nbsp;</span>
-                        <select class="form-control" style='font-size: 10px;' name="team">
-                            <option value="0"></option>
-                          @foreach ($teams as $team)
-                            <option value="{{ $team->id }}">{{ $team->name }}</option>
-                          @endforeach
-                        </select>
+                  @if($contest->status === 0)
+                    <div class="card-body">
+                      <h4 class="card-title">{{ $contest->title }}</h4>
+                      <p class="card-text">{{ $contest->description }}</p>
+                      <hr />
+                      <form method="POST" action="{{ route('user.contests.join') }}" data-parsley-validate="">
+                        {{ csrf_field() }}
+                        <input type="hidden" name="id" value="{{ $contest->id }}" />
+                          <div class="pull-left">
+                            <div class="form-group form-inline">
+                              <label class="control-label">Select Your Team</label>
+                              <span>&nbsp; &nbsp;</span>
+                              <select class="form-control" style='font-size: 10px;' name="team" required="">
+                                  <option value=""></option>
+                                @foreach ($teams as $team)
+                                  <option value="{{ $team->id }}">{{ $team->name }}</option>
+                                @endforeach
+                              </select>
+                            </div>
+                          </div>
+                          <div class="pull-right">
+                            <input type="submit" class="btn btn-success" value="Participate"/>
+                          </div>
+                        </form>
                       </div>
-                    </div>
-                    <div class="pull-right">
-                      <input type="submit" class="btn btn-success" value="Participate"/>
-                    </div>
-                  </form>
-                </div>
-                <div class="card-footer text-muted">
-                  <div class="pull-left">
-                    Starts From : {{ $contest->start_on }}
-                  </div>
-                  <div class="pull-right">
-                    Ends On : {{ $contest->close_on }}
-                  </div>
-                </div>
+                      <div class="card-footer text-muted">
+                        <div class="pull-left">
+                          Starts From : {{ $contest->start_on }}
+                        </div>
+                        <div class="pull-right">
+                          Ends On : {{ $contest->close_on }}
+                        </div>
+                      </div>
+                  @endif
               </div>
               <br />
             @endforeach
@@ -99,7 +106,12 @@
                     <p class="card-text"><strong>{{ $data['contest_name'] }}</strong></p>
                   </div>
                   <div class="pull-right">
-                    <a href="#" class="btn btn-sm btn-danger">Cancel Participation</a>
+                    <form method="POST" action="{{ route('user.contests.cancel') }}">
+                      {{ csrf_field() }}
+                      <input type="hidden" name="_method" value="delete" />
+                      <input type="hidden" name="id" value="{{ $data['id'] }}" />
+                      <input type="submit" class="btn btn-sm btn-danger" value="Cancel Participation" />
+                    </form>
                   </div>
                 </div>
               </div>
@@ -114,5 +126,5 @@
 @endsection
 
 @section('page-scripts')
-
+<script src="{{ asset('js/parsley.min.js') }}"></script>
 @endsection

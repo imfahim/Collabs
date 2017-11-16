@@ -5,7 +5,7 @@ namespace App\Http\Requests;
 use Illuminate\Foundation\Http\FormRequest;
 use Session;
 
-class ContestRequest extends FormRequest
+class ProjectRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -14,7 +14,7 @@ class ContestRequest extends FormRequest
      */
     public function authorize()
     {
-        if(Session::has('is_company') || Session::get('is_company') === true){
+        if(Session::has('is_user') || Session::get('is_user') === true){
           return true;
         }
         return false;
@@ -28,11 +28,11 @@ class ContestRequest extends FormRequest
     public function rules()
     {
         return [
-            'title' => 'bail|required|max:100|unique:contests,title',
-            'description' => 'bail|required|max:500',
-            'start_date' => 'bail|required|date_format:"d/m/Y"|before:end_date',
-            'end_date' => 'bail|required|date_format:"d/m/Y"|after:start_date',
-            'status' => ''
+          'name' => 'bail|required|max:255',
+          'details'=> 'bail|required|max:500',
+          'github'=> 'bail|required|url',
+          'youtube'=> 'nullable|url',
+          'team' => 'required'
         ];
     }
 }

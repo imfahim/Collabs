@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Company;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
+
+use App\Http\Requests\CompanyRequest;
 use Session;
 class ProfileController extends Controller
 {
@@ -60,7 +62,7 @@ class ProfileController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CompanyRequest $request)
     {
       $id =DB::table('companydetails')->insertGetId(
               ['companyId' => $request->session()->get('id'),
@@ -70,7 +72,9 @@ class ProfileController extends Controller
               'about'=>$request->input('about')
             ]
           );
-             return redirect()->route('company.home');
+
+          Session::flash('success', 'Your profile is Successfully saved !');
+          return redirect()->route('company.home');
     }
 
     /**
@@ -102,7 +106,7 @@ class ProfileController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request)
+    public function update(CompanyRequest $request)
     {
       $updateCompany=array(
               'companyId' => Session::get('id'),
@@ -117,6 +121,7 @@ class ProfileController extends Controller
           ->where('id', $request->input('id'))
           ->update($updateCompany);
 
+      Session::flash('success', 'Your profile is Successfully updated !');
       return redirect()->route('companyprofile.index');
     }
 

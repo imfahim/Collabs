@@ -26,15 +26,20 @@
 					</tr>
 					<tr>
 							<td style='width:20%; font-weight: bold;'>DATE OF BIRTH: </td>
-									<td><input type="date" name="dOB"></td>
+									<td>
+										<div class="input-group input-append date" id="birth_dateRangePicker">
+												<input type="text" class="form-control" name="dOB" value="{{ old('dOB') }}" />
+												<span class="input-group-addon add-on"><span class="glyphicon glyphicon-calendar"></span></span>
+										</div>
+									</td>
 					</tr>
 					<tr>
 							<td style='width:20%; font-weight: bold;'>CITY: </td>
-							<td><input type="text" class="form-control" name="city" value=""></td>
+							<td><input type="text" class="form-control" name="city" value="{{ old('city') }}"></td>
 					</tr>
 					<tr>
 							<td style='width:20%; font-weight: bold;'>GENDER: </td>
-									<td><select class="form-control" style='font-size: 10px;'name="gender">
+									<td><select class="form-control" style='font-size: 10px;'name="gender" value="{{ old('gender') }}">
 											<option value="1">MALE</option>
 											<option value="2">FEMALE</option>
 											<option value="3">OTHERS</option>
@@ -42,37 +47,37 @@
 					</tr>
 					<tr>
 							<td style='width:20%; font-weight: bold;'>CONTACT NO: </td>
-							<td><input type="text" class="form-control" name="contactNo" value=""></td>
+							<td><input type="text" class="form-control" name="contactNo" value="{{ old('contactNo') }}"></td>
 					</tr>
 					<tr>
 							<td style='width:20%; font-weight: bold;'>OCCUPATION: </td>
-							<td><input type="text" class="form-control" name="occupation" value=""></td>
+							<td><input type="text" class="form-control" name="occupation" value="{{ old('occupation') }}"></td>
 					</tr>
 					<tr>
 							<td style='width:20%; font-weight: bold;'>WEBSITE: </td>
-							<td><input type="text" class="form-control" name="website" value=""></td>
+							<td><input type="text" class="form-control" name="website" value="{{ old('website') }}"></td>
 					</tr>
 					<tr>
 							<td style='width:20%; font-weight: bold;'>ABOUT ME: </td>
 							<td>
-									<textarea name="aboutMe" class="form-control" ></textarea>
+									<textarea name="aboutMe" class="form-control" >{{ old('aboutMe') }}</textarea>
 							</td>
 					</tr>
 					<tr>
 							<td style='width:20%; font-weight: bold;'>PAST EXPERIENCE: </td>
-							<td><input type="text" class="form-control" name="pastExperience" value=""></td>
+							<td><input type="text" class="form-control" name="pastExperience" value="{{ old('pastExperience') }}"></td>
 					</tr>
 					<tr>
 							<td style='width:20%; font-weight: bold;'>EDUCATION: </td>
-							<td><input type="text" class="form-control" name="education" value=""></td>
+							<td><input type="text" class="form-control" name="education" value="{{ old('education') }}"></td>
 					</tr>
 					<tr>
 							<td style='width:20%; font-weight: bold;'>PROGRAMMING EXPERIENCE: </td>
-							<td><input type="text" class="form-control" name="programmingExperience" value=""></td>
+							<td><input type="text" class="form-control" name="programmingExperience" value="{{ old('programmingExperience') }}"></td>
 					</tr>
 					<tr>
 							<td style='width:20%; font-weight: bold;'>PROJECTS: </td>
-							<td><input type="text" class="form-control" name="projects" value=""></td>
+							<td><input type="text" class="form-control" name="projects" value="{{ old('projects') }}"></td>
 					</tr>
     			</table>
 					<input type="submit" class="btn btn-warning" value="Update">
@@ -104,7 +109,7 @@
 					</tr>
 					<tr>
 						<td style='width:20%; font-weight: bold;'>DATE OF BIRTH: </td>
-								<td>{{ $user->dateOfBirth}}</td>
+								<td>{{ \Carbon\Carbon::parse($user->dateOfBirth)->format('d/m/Y') }}</td>
 					</tr>
 					<tr>
 						<td style='width:20%; font-weight: bold;'>CITY: </td>
@@ -164,4 +169,21 @@
 	</table>
 </div>
 </div>
+@endsection
+
+@section('page-scripts')
+  <script>
+  $(document).ready(function() {
+      $('#birth_dateRangePicker')
+          .datepicker({
+              format: 'dd/mm/yyyy',
+              startDate: '01/01/1990',
+              endDate: '30/12/2020'
+          })
+          .on('changeDate', function(e) {
+              // Revalidate the date field
+              $('#dateRangeForm').formValidation('revalidateField', 'date');
+          });
+  });
+  </script>
 @endsection

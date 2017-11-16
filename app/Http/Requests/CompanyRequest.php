@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Session;
 
 class CompanyRequest extends FormRequest
 {
@@ -13,7 +14,10 @@ class CompanyRequest extends FormRequest
      */
     public function authorize()
     {
-        return true;
+        if(Session::has('is_company') || Session::get('is_company') === true){
+          return true;
+        }
+        return false;
     }
 
     /**
@@ -25,9 +29,9 @@ class CompanyRequest extends FormRequest
     {
         return [
             'city'=>'required',
-            'contactNo'=>'bail|required|numeric',
-            'website'=>'nullable|url',
-            'about'=>'nullable|max:255'
+            'contactNo'=>'bail|required',
+            'website'=>'bail|nullable|url',
+            'about'=>'bail|nullable|max:255'
         ];
     }
 }

@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Session;
 
 class UserRequest extends FormRequest
 {
@@ -13,7 +14,10 @@ class UserRequest extends FormRequest
      */
     public function authorize()
     {
+      if(Session::has('is_user') || Session::get('is_user') === true){
         return true;
+      }
+      return false;
     }
 
     /**
@@ -27,9 +31,9 @@ class UserRequest extends FormRequest
           'dOB' => 'required',
           'city'=>'required',
           'gender'=> 'required',
-          'contactNo'=>'required|numeric',
+          'contactNo'=>'required',
           'occupation'=>'required',
-          'website'=>'url',
+          'website'=>'nullable|url',
           'aboutMe'=>'nullable|max:255',
           'pastExperience'=>'nullable|max:1000',
           'education'=>'nullable|max:1000',

@@ -83,6 +83,7 @@ Route::group(['middleware' => 'access.auth'], function(){
     Route::get('contests', 'User\ContestController@index')->name('user.contests.index');
     Route::post('contests/join', 'User\ContestController@join')->name('user.contests.join');
     Route::post('contests', 'User\ContestController@participate')->name('user.contests.participate');
+    Route::delete('contests/cancel', 'User\ContestController@cancel')->name('user.contests.cancel');
 
     Route::get('stats/chart/data', 'User\HomeController@get_chart_data');
   });

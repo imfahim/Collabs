@@ -30,82 +30,24 @@
                 </div>
               </div>
               <div class="col-md-6">
-                <label class="control-label">Starts On</label>
                   <div class="form-group label-floating">
-
-                      <div class="col-md-4">
-                        <div class="col-md-8">
-                      <select class="form-control" style='font-size: 10px;' name="start_day">
-                        @for ($i = 1; $i < 32; $i++)
-                            <option value="{{$i}}" {{ ($i == $dates['start_day']) ? ' selected="selected"' : '' }}>{{$i}}</option>
-                        @endfor
-                      </select>
-                      </div>
-                      <div class="col-md-2">
-                      <h4>/</h4>
-                      </div>
-                      </div>
-                      <div class="col-md-4">
-                        <div class="col-md-8">
-                          <select class="form-control" style='font-size: 10px;' name="start_month">
-                            @for ($i = 1; $i < 13; $i++)
-                                <option value="{{$i}}" {{ ($i == $dates['start_month']) ? ' selected="selected"' : '' }}>{{$i}}</option>
-                            @endfor
-                          </select>
+                    <label class="col-xs-3 control-label">Starts On</label>
+                    <div class="col-xs-5 date">
+                        <div class="input-group input-append date" id="start_dateRangePicker">
+                            <input type="text" class="form-control" name="start_date" value="{{ \Carbon\Carbon::parse($contest->start_on)->format('d/m/y') }}" />
+                            <span class="input-group-addon add-on"><span class="glyphicon glyphicon-calendar"></span></span>
                         </div>
-                        <div class="col-md-2">
-                          <h4>/</h4>
-                        </div>
-                      </div>
-                      <div class="col-md-4">
-                      <div class="col-md-8">
-                      <select class="form-control" style='font-size: 10px;' name="start_year">
-                        @for ($i = 2018; $i > 2010; $i--)
-                            <option value="{{$i}}" {{ ($i == $dates['start_year']) ? ' selected="selected"' : '' }}>{{$i}}</option>
-                        @endfor
-                      </select>
-                      </div>
-                      </div>
+                    </div>
                   </div>
               </div>
               <div class="col-md-6">
-                <label class="control-label">Ends On</label>
-                  <div class="form-group label-floating">
-
-                      <div class="col-md-4">
-                        <div class="col-md-8">
-                      <select class="form-control" style='font-size: 10px;' name="end_day">
-                        @for ($i = 1; $i < 32; $i++)
-                            <option value="{{$i}}" {{ ($i == $dates['end_day']) ? ' selected="selected"' : '' }}>{{$i}}</option>
-                        @endfor
-                      </select>
-                      </div>
-                      <div class="col-md-2">
-                      <h4>/</h4>
-                      </div>
-                      </div>
-                      <div class="col-md-4">
-                      <div class="col-md-8">
-                      <select class="form-control" style='font-size: 10px;' name="end_month">
-                        @for ($i = 1; $i < 13; $i++)
-                            <option value="{{$i}}" {{ ($i == $dates['end_month']) ? ' selected="selected"' : '' }}>{{$i}}</option>
-                        @endfor
-                      </select>
-                      </div>
-                      <div class="col-md-2">
-                      <h4>/</h4>
-                      </div>
-                      </div>
-                      <div class="col-md-4">
-                      <div class="col-md-8">
-                      <select class="form-control" style='font-size: 10px;' name="end_year">
-                        @for ($i = 2018; $i > 2010; $i--)
-                            <option value="{{$i}}" {{ ($i == $dates['end_year']) ? ' selected="selected"' : '' }}>{{$i}}</option>
-                        @endfor
-                      </select>
-                      </div>
-                      </div>
-                  </div>
+                <label class="col-xs-3 control-label">Ends On</label>
+                <div class="col-xs-5 date">
+                    <div class="input-group input-append date" id="end_dateRangePicker">
+                        <input type="text" class="form-control" name="end_date" value="{{ \Carbon\Carbon::parse($contest->close_on)->format('d/m/y') }}" />
+                        <span class="input-group-addon add-on"><span class="glyphicon glyphicon-calendar"></span></span>
+                    </div>
+                </div>
               </div>
               <div class="col-md-12">
                   <div class="form-group label-floating">
@@ -126,4 +68,31 @@
 
     </div>
   </div>
+@endsection
+
+@section('page-scripts')
+  <script>
+  $(document).ready(function() {
+      $('#start_dateRangePicker')
+          .datepicker({
+              format: 'dd/mm/yyyy',
+              startDate: '01/01/2010',
+              endDate: '30/12/2020'
+          })
+          .on('changeDate', function(e) {
+              // Revalidate the date field
+              $('#dateRangeForm').formValidation('revalidateField', 'date');
+          });
+      $('#end_dateRangePicker')
+          .datepicker({
+              format: 'dd/mm/yyyy',
+              startDate: '01/01/2010',
+              endDate: '30/12/2020'
+          })
+          .on('changeDate', function(e) {
+              // Revalidate the date field
+              $('#dateRangeForm').formValidation('revalidateField', 'date');
+          });
+  });
+  </script>
 @endsection

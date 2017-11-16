@@ -18,13 +18,25 @@
               <div class="col-md-12">
                 <div class="form-group">
                   <label for="title">Name</label>
-                  <input type="text" class="form-control" id="title" placeholder="Title will be shown in the contests page." name="name" required>
+                  <input type="text" class="form-control" id="title" placeholder="Name will be shown in the project page." name="name" value="{{ old('name') }}" required>
                 </div>
               </div>
               <div class="col-md-12">
                 <div class="form-group">
                   <label for="description">Details</label>
-                  <textarea class="form-control" id="description" rows="3" placeholder="Write about the contests." name="details"></textarea>
+                  <textarea class="form-control" id="description" rows="3" placeholder="Write about the project." name="details">{{ old('details') }}</textarea>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label for="description">Github Link</label>
+                  <input type="text" class="form-control" id="github" placeholder="Insert the github link o your project here" name="github" value="{{ old('github') }}">
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label for="description">Demo Youtube Link</label>
+                  <input type="text" class="form-control" id="youtube" placeholder="If you have any youtube demo link, enter the link here" name="youtube" value="{{ old('github') }}">
                 </div>
               </div>
               <div class="col-md-12">
