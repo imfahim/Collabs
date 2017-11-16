@@ -10,55 +10,6 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-
-
-
-
-
-
-
-Route::get('/team', 'User\TeamController@index')->name('team');
-
-Route::get('/team/create', 'User\TeamController@create')->name('team.create');
-Route::post('/team/create', 'User\TeamController@store')->name('team.store');
-
-Route::get('/team/edit/{id}', 'User\TeamController@edit')->name('team.edit');
-Route::post('/team/edit/{id}', 'User\TeamController@update')->name('team.update');
-
-Route::get('/team/details/{id}', 'User\TeamController@details')->name('team.details');
-
-Route::get('/team/searchuser/{id}', 'User\TeamController@searchuser')->name('team.searchuser');
-Route::post('/team/searchuser/{id}', 'User\TeamController@searchresult')->name('team.searchresult');
-
-Route::get('/team/invite/{teamid}/{userid}', 'User\TeamController@invite')->name('team.invite');
-
-Route::get('/team/requests', 'User\TeamController@requests')->name('team.requests');
-
-Route::get('/team/accept/{id}', 'User\TeamController@reqaccept')->name('team.accept');
-Route::get('/team/decline/{id}', 'User\TeamController@reqdecline')->name('team.decline');
-
-Route::get('/team/reqcancel/{teamid}/{userid}', 'User\TeamController@cancel')->name('team.reqcancel');
-Route::get('/team/memremove/{teamid}/{userid}', 'User\TeamController@memremove')->name('team.memremove');
-
-Route::get('/offers', 'User\OfferController@index')->name('offers');
-Route::get('/offers/accept/{id}', 'User\OfferController@accept')->name('offers.accept');
-Route::get('/offers/decline/{id}', 'User\OfferController@decline')->name('offers.decline');
-Route::get('/offers/details/{id}', 'User\OfferController@companydetails')->name('offers.companydetails');
-
-
-
-Route::get('/hire', 'Company\HireController@index')->name('hire.index');
-Route::post('/hire', 'Company\HireController@searchresult')->name('hire.searchresult');
-Route::get('/hire/userdetails/{id}', 'Company\HireController@userdetails')->name('userdetails');
-Route::post('/hire/invite/', 'Company\HireController@hire')->name('hire.invite');
-Route::get('/hire/invitations', 'Company\HireController@invitelist')->name('invitations');
-
-
-
-
-
-
-
 Route::get('/', function () {
     return view('welcome');
 });
@@ -85,7 +36,33 @@ Route::group(['middleware' => 'access.auth'], function(){
     Route::post('contests', 'User\ContestController@participate')->name('user.contests.participate');
     Route::delete('contests/cancel', 'User\ContestController@cancel')->name('user.contests.cancel');
 
-    Route::get('stats/chart/data', 'User\HomeController@get_chart_data');
+    Route::get('teams', 'User\TeamController@index')->name('team');
+
+    Route::get('teams/create', 'User\TeamController@create')->name('team.create');
+    Route::post('teams/create', 'User\TeamController@store')->name('team.store');
+
+    Route::get('teams/edit/{id}', 'User\TeamController@edit')->name('team.edit');
+    Route::post('teams/edit/{id}', 'User\TeamController@update')->name('team.update');
+
+    Route::get('teams/details/{id}', 'User\TeamController@details')->name('team.details');
+
+    Route::get('teams/searchuser/{id}', 'User\TeamController@searchuser')->name('team.searchuser');
+    Route::post('teams/searchuser/{id}', 'User\TeamController@searchresult')->name('team.searchresult');
+
+    Route::get('teams/invite/{teamid}/{userid}', 'User\TeamController@invite')->name('team.invite');
+
+    Route::get('teams/requests', 'User\TeamController@requests')->name('team.requests');
+
+    Route::get('teams/accept/{id}', 'User\TeamController@reqaccept')->name('team.accept');
+    Route::get('teams/decline/{id}', 'User\TeamController@reqdecline')->name('team.decline');
+
+    Route::get('teams/reqcancel/{teamid}/{userid}', 'User\TeamController@cancel')->name('team.reqcancel');
+    Route::get('teams/memremove/{teamid}/{userid}', 'User\TeamController@memremove')->name('team.memremove');
+
+    Route::get('offers', 'User\OfferController@index')->name('offers');
+    Route::get('offers/accept/{id}', 'User\OfferController@accept')->name('offers.accept');
+    Route::get('offers/decline/{id}', 'User\OfferController@decline')->name('offers.decline');
+    Route::get('offers/details/{id}', 'User\OfferController@companydetails')->name('offers.companydetails');
   });
 
   Route::group(['prefix' => 'company', 'middleware' => 'access.company'], function(){
@@ -98,7 +75,12 @@ Route::group(['middleware' => 'access.auth'], function(){
     Route::post('review/declare', 'Company\ReviewController@declare')->name('company.review.declare');
     Route::post('review/reject', 'Company\ReviewController@reject')->name('company.review.reject');
 
-    Route::get('stats/chart/data', 'User\HomeController@get_chart_data');
+    Route::get('hires', 'Company\HireController@index')->name('hire.index');
+    Route::post('hires', 'Company\HireController@searchresult')->name('hire.searchresult');
+    Route::get('hires/userdetails/{id}', 'Company\HireController@userdetails')->name('userdetails');
+    Route::post('hires/invite/', 'Company\HireController@hire')->name('hire.invite');
+    Route::get('hires/invitations', 'Company\HireController@invitelist')->name('invitations');
+
   });
 
 });
