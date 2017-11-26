@@ -201,9 +201,9 @@ class TeamController extends Controller
             ->where('team_user.team_id', '=', $id)
             ->get();
             //ae team er members ber krlo
-    $parbe=0;
+    $parbe=0; //leader or memer na hole team er member dkhbe but projects dkhbe na
      foreach($members as $mem){
-       if($mem->id == session('id')){
+       if($mem->user_id == session('id')){
          $parbe=1;
          break;
        }
@@ -212,7 +212,10 @@ class TeamController extends Controller
        $parbe=1;
      }
 
-      $projects = Project::where('team_id', $id)->get();//projects
+     $projects=DB::table('team_project')
+               ->join('projects','projects.id','=','team_project.project_id')
+                ->where('team_project.team_id',$id)
+                ->get();//projects
 
       return view('user.team.details')->withLeader($leader) //leader pass krlo
                                       ->withMembers($members)//member list pass krlo

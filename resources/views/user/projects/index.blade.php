@@ -7,9 +7,8 @@
     <div class="col-md-12">
       <div class="card">
         <div class="card-body">
-          <div class="pull-right">
             <a href="{{ route('projects.create') }}"><button type="button" class="btn btn-primary">Create New</button></a>
-          </div>
+          <a href="{{ route('project.requests') }}"><button type="button" class="btn btn-warning pull-right">Project Requests</button></a>
         </div>
       </div>
       <div class="card">

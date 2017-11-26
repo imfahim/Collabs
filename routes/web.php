@@ -24,7 +24,7 @@ Route::group(['middleware' => 'access.guest'], function(){
 });
 
 Route::group(['middleware' => 'access.auth'], function(){
-
+  Route::get('teams/details/{id}', 'User\TeamController@details')->name('team.details.company');
   Route::group(['prefix' => 'user', 'middleware' => 'access.user'], function(){
     Route::get('/', 'User\HomeController@index')->name('user.home');
 
@@ -51,15 +51,27 @@ Route::group(['middleware' => 'access.auth'], function(){
     Route::get('teams/searchuser/{id}', 'User\TeamController@searchuser')->name('team.searchuser');
     Route::post('teams/searchuser/{id}', 'User\TeamController@searchresult')->name('team.searchresult');
 
+    Route::get('projects/searchteam/{id}', 'User\ProjectController@searchteam')->name('project.searchteam');
+    Route::post('projects/searchteam/{id}', 'User\ProjectController@searchresult')->name('project.searchteam');
+
     Route::get('teams/invite/{teamid}/{userid}', 'User\TeamController@invite')->name('team.invite');
+    Route::get('project/invite/{projectid}/{teamid}', 'User\ProjectController@invite')->name('project.invite');
 
     Route::get('teams/requests', 'User\TeamController@requests')->name('team.requests');
+    Route::get('project/requests', 'User\ProjectController@requests')->name('project.requests');
+
+    Route::get('project/decline/{id}', 'User\ProjectController@reqdecline')->name('project.decline');
+    Route::get('project/accept/{id}', 'User\ProjectController@reqaccept')->name('project.accept');
+
 
     Route::get('teams/accept/{id}', 'User\TeamController@reqaccept')->name('team.accept');
     Route::get('teams/decline/{id}', 'User\TeamController@reqdecline')->name('team.decline');
 
     Route::get('teams/reqcancel/{teamid}/{userid}', 'User\TeamController@cancel')->name('team.reqcancel');
     Route::get('teams/memremove/{teamid}/{userid}', 'User\TeamController@memremove')->name('team.memremove');
+
+    Route::get('project/requests/details/{projectid}/{teamid}/{userid}', 'User\ProjectController@reqdetails')->name('project.reqdetails');
+
 
     Route::get('offers', 'User\OfferController@index')->name('offers');
     Route::get('offers/accept/{id}', 'User\OfferController@accept')->name('offers.accept');
@@ -82,6 +94,8 @@ Route::group(['middleware' => 'access.auth'], function(){
     Route::get('hires/userdetails/{id}', 'Company\HireController@userdetails')->name('userdetails');
     Route::post('hires/invite/', 'Company\HireController@hire')->name('hire.invite');
     Route::get('hires/invitations', 'Company\HireController@invitelist')->name('invitations');
+
+
 
   });
 
