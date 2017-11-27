@@ -7,6 +7,9 @@
     <div class="col-md-12">
       <div class="card">
         <div class="card-body">
+          <div class="pull-left">
+            <a href="{{ route('company.invitations.list') }}"><button type="button" class="btn btn-warning">Contests Invitations ({{ $count_invitations }})</button></a>
+          </div>
           <div class="pull-right">
             <a href="{{ route('contests.create') }}"><button type="button" class="btn btn-primary">Create New</button></a>
           </div>

@@ -9,7 +9,9 @@ use App\Http\Requests\ContestRequest;
 use App\Contest;
 use App\Team;
 use App\Project;
+use App\User;
 use App\RelContestUser;
+use App\RelContestCompany;
 use Session;
 use Carbon\Carbon;
 
@@ -23,8 +25,16 @@ class ContestController extends Controller
     public function index()
     {
         $contests = Contest::where('company_id', Session::get('id'))->get();
+        $contests_invitations = RelContestCompany::where('company_id', Session::get('id'))->get(['id']);
+
+        if($contests_invitations){
+          $count_invitations = count($contests_invitations);
+        }else{
+          $count_invitations = 0;
+        }
+
         Session::put('menu', 'contest');
-        return view('company.contests.index')->with('contests', $contests);
+        return view('company.contests.index')->with('contests', $contests)->with('count_invitations', $count_invitations);
     }
 
     /**
@@ -34,7 +44,18 @@ class ContestController extends Controller
      */
     public function create()
     {
-        return view('company.contests.create');
+        if(Session::has('success') && Session::get('success') === 'Successfully Found !'){
+          if(Session::has('companies')){
+            $companies = Session::get('companies');
+            return view('company.contests.create')->with('companies', $companies);
+          }else{
+            $companies = '';
+            return view('company.contests.create')->with('companies', $companies);
+          }
+        }else{
+          $companies = '';
+          return view('company.contests.create')->with('companies', $companies);
+        }
     }
 
     /**
@@ -63,6 +84,122 @@ class ContestController extends Controller
 
         Session::flash('success', 'Contest Successfully Added !');
         return redirect()->route('contests.index');
+    }
+
+    public function request(ContestRequest $request)
+    {
+        $new_start_date = str_replace('/', '-', $request->start_date);
+        $start_date = Carbon::createFromFormat('d-m-Y', $new_start_date)->format('Y-m-d');
+
+        $new_end_date = str_replace('/', '-', $request->end_date);
+        $end_date = Carbon::createFromFormat('d-m-Y', $new_end_date)->format('Y-m-d');
+
+        $contest = new Contest;
+
+        $contest->company_id = Session::get('id');
+        $contest->title = $request->title;
+        $contest->description = $request->description;
+        $contest->start_on = $start_date;
+        $contest->close_on = $end_date;
+        $contest->status = 2;
+
+        $contest->save();
+
+        $last_entry = Contest::orderBy('id', 'desc')->first();
+
+        $count_selected_companies = count($request->companies);
+
+        if($count_selected_companies > 1){
+          for($iteration = 0; $iteration < $count_selected_companies; $iteration++){
+            $contest_company = new RelContestCompany;
+
+            $contest_company->user_id = Session::get('id');
+            $contest_company->contest_id = $last_entry->id;
+            $contest_company->company_id = $request->companies[$iteration];
+            $contest_company->message = $request->message;
+
+            $contest_company->save();
+          }
+        }else{
+          $contest_company = new RelContestCompany;
+
+          $contest_company->user_id = Session::get('id');
+          $contest_company->contest_id = $last_entry->id;
+          $contest_company->company_id = $request->companies[0];
+          $contest_company->message = $request->message;
+
+          $contest_company->save();
+        }
+
+        Session::flash('success', 'Contest Successfully Requested !');
+        return redirect()->route('contests.index');
+    }
+
+    public function show_invitation_list(Request $request){
+      $contests_invitations_sent = RelContestCompany::where('user_id', Session::get('id'))->get(['contest_id', 'company_id', 'message', 'status']);
+      $contests_invitations_received = RelContestCompany::where('company_id', Session::get('id'))->where('status', 0)->get(['id', 'user_id', 'contest_id', 'message']);
+
+      // Sent Invitations
+      $data_sent_array = array();
+      $data_sent_has = false;
+
+      if(!$contests_invitations_sent->isEmpty()){
+        $data_sent_has = true;
+
+        foreach ($contests_invitations_sent as $invitation) {
+          $data_sent_array[] = [
+            'contest' => Contest::where('id', $invitation->contest_id)->get(['title', 'description']),
+            'company_name' => User::where('id', $invitation->company_id)->first()['name'],
+            'message' => $invitation->message,
+            'status' => $invitation->status,
+          ];
+        }
+      }
+      // -------------------------------------------
+
+      // Received Invitations
+      $data_rec_array = array();
+      $data_rec_has = false;
+
+      if(!$contests_invitations_received->isEmpty()){
+        $data_rec_has = true;
+
+        foreach ($contests_invitations_received as $invitation) {
+          $data_rec_array[] = [
+            'id' => $invitation->id,
+            'contest' => Contest::where('id', $invitation->contest_id)->get(['title', 'description', 'start_on', 'close_on']),
+            'user_name' => User::where('id', $invitation->user_id)->first()['name'],
+            'message' => $invitation->message,
+          ];
+        }
+      }
+      // -------------------------------------------
+
+      return view('company.contests.invitations')->with('sent_inviations', $data_sent_array)->with('data_sent_has', $data_sent_has)->with('received_invitations', $data_rec_array)->with('data_rec_has', $data_rec_has);
+    }
+
+    public function invitation_accept(Request $request){
+      $invitation = RelContestCompany::find($request->id);
+
+      $invitation->status = 1;
+
+      $invitation->save();
+
+      Session::flash('success', 'Successfully Accepted !');
+      return redirect()->route('company.invitations.list');
+    }
+
+    public function invitation_reject(Request $request){
+      $invitation = RelContestCompany::find($request->id);
+
+      $invitation->status = 2;
+
+      $invitation->save();
+
+      //Contest::destroy($invitation->contest_id);
+
+      Session::flash('success', 'Successfully Rejected !');
+      return redirect()->route('company.invitations.list');
     }
 
     /**

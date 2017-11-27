@@ -83,7 +83,19 @@ Route::group(['middleware' => 'access.auth'], function(){
     Route::get('/', 'Company\HomeController@index')->name('company.home');
 
     Route::resource('companyprofile', 'Company\ProfileController', ['except' => 'show']);
+
     Route::resource('contests', 'Company\ContestController');
+    Route::post('contests/request', 'Company\ContestController@request')->name('contests.request');
+
+    Route::get('contests/invitations/list', 'Company\ContestController@show_invitation_list')->name('company.invitations.list');
+
+    Route::post('contests/invitations/accept', 'Company\ContestController@invitation_accept')->name('company.invitations.accept');
+    Route::post('contests/invitations/reject', 'Company\ContestController@invitation_reject')->name('company.invitations.reject');
+
+    Route::post('contests/find/company', 'UserController@search_companies_by_name')->name('companies.find.by.name');
+
+
+
 
     Route::get('review/{participant_id}/project/{project_id}/', 'Company\ReviewController@show')->name('company.review.show');
     Route::post('review/declare', 'Company\ReviewController@declare')->name('company.review.declare');
@@ -94,8 +106,6 @@ Route::group(['middleware' => 'access.auth'], function(){
     Route::get('hires/userdetails/{id}', 'Company\HireController@userdetails')->name('userdetails');
     Route::post('hires/invite/', 'Company\HireController@hire')->name('hire.invite');
     Route::get('hires/invitations', 'Company\HireController@invitelist')->name('invitations');
-
-
 
   });
 

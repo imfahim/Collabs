@@ -1,0 +1,40 @@
+@if (count($joined_projects) !== 0)
+  <table class="table table-striped" data-form="deleteForm">
+    <thead>
+      <tr>
+        <th scope="col">Name</th>
+        <th scope="col">Details</th>
+        <th scope="col">Managed By</th>
+        <th scope="col">Status</th>
+        <th scope="col">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <?php $index = 0; ?>
+      @foreach ($joined_projects[$index] as $project)
+        <tr>
+          <th scope="row">{{ $project['name'] }}</th>
+          <td>{{ $project['details'] }}</td>
+          <td>{{ 'Team '.$project['team']['name'] }}</td>
+          <td>{{ ($project['status']) ? 'Development Phase' : 'Finished' }}</td>
+          <td>
+              <div class="btn-group">
+                <a href="{{ route('projects.show', [$project['id']]) }}" class="btn btn-sm btn-info" role="button">Show</a>
+                <a href="{{ route('projects.edit', [$project['id']]) }}" class="btn btn-sm btn-warning" role="button">Edit</a>
+              </td>
+                <td><form class="form-delete" method="POST" action="{{ route('projects.destroy', [$project['id']]) }}">
+                  {{ csrf_field() }}
+                  <input type="hidden" name="_method" value="delete" />
+                  <input type="hidden" name="id" value="{{ $project['id'] }}" />
+                  <input type="submit" class="btn btn-sm btn-danger" role="button" value="Delete"/>
+                </form>
+              </div>
+          </td>
+        </tr>
+        <?php $index++; ?>
+      @endforeach
+    </tbody>
+  </table>
+@else
+  No Content's Yet, Please Add a new entity.
+@endif

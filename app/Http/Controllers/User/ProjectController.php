@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\DB;
 use App\Http\Requests\ProjectRequest;
 use App\Project;
 use App\Team;
+use App\RelTeamProject;
 use Session;
 
 class ProjectController extends Controller
@@ -19,16 +20,66 @@ class ProjectController extends Controller
      */
     public function index()
     {
-      $projects = Project::where('user_id', Session::get('id'))->with('team')->get();
-      /*$projects =DB::table('team_project')
+      Session::put('menu', 'project');
+
+      $my_projects = Project::where('user_id', Session::get('id'))->with('team')->get();
+
+      $accepted_invites = RelTeamProject::where('accept', 1)->get(['team_id', 'project_id']);
+
+      //dd($accepted_invites);
+
+      //$d = Team::where('id', 8)->where('leader_id', Session::get('id'))->get(['id']);
+
+      //dd($d);
+      /*
+      $data_array = array();
+      $index = 0;
+      $has_data = false;
+
+      foreach ($accepted_invites as $invite) {
+        $data_array['my_teams_ids'] = [
+           Team::where('id', $invite->team_id)->where('leader_id', Session::get('id'))->first()['id'],
+        ];
+
+        if($data_array['my_teams_ids'][0] !== null){
+
+        }else{
+          $has_data = false;
+        }
+
+
+        foreach ($data_array[$index]['my_teams_ids'] as $team_id) {
+          $data_array['joined_project_ids'] = [
+               RelTeamProject::where('team_id', $team_id->id)->first()['project_id'],
+          ];
+
+          //dd($data_array['joined_project_ids']);
+          foreach ($data_array['joined_project_ids'] as $project_id) {
+            $data_array['joined_projects'] = [
+               Project::where('id', $project_id)->with('team')->get(),
+            ];
+          }
+        }
+
+        $index++;
+      }
+
+
+
+      dd($data_array['joined_projects']);
+      /*
+      $projectss =DB::table('team_project')
                       ->join('teams', 'teams.id', '=', 'team_project.team_id')
                       ->join('projects','projects.id','=','team_project.project_id')
                       ->where('teams.leader_id',session('id'))
                       ->where('team_project.accept',1)
-                      ->get();*/
+                      ->get();
       //erkm kore projects ante hobe..first ami kon team er leader..then oi team er project ki ki ache from team_project..then oi id gula theke project :3
-      Session::put('menu', 'project');
-      return view('user.projects.index')->with('projects', $projects);
+
+      dd($projectss);
+      */
+      $dummy = [['name' => 'goa', ''], ['name' => 'goa'], ['name' => 'goa'] , ['name' => 'goa']];
+      return view('user.projects.index')->with('projects', $my_projects)->with('joined_projects', $dummy);
     }
 
     /**
