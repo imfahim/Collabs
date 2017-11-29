@@ -102,6 +102,28 @@
         </div>
       @endif
       @endif
+      @if(session('is_company'))
+      <div class="card">
+        <div class="card-body">
+            <p class="lead">
+              <strong>  Invite to Hire:</strong>
+            </p>
+            <form method="POST" action="{{route('hire.invite')}}">
+              {{ csrf_field() }}
+              <input type="hidden" name="user_id" value="{{ $teamid }}" />
+              <input type="hidden" name="who" value="team" />
+
+              <div class="form-group">
+           <label for="comment">Message:</label>
+           <textarea class="form-control" rows="5" name="details"></textarea>
+          </div>
+            <button type="submit" class="btn btn-primary">Hire</button><br><br>
+          </form>
+
+        </div>
+      </div>
+
+      @endif
     </div>
     <div class="col-md-6">
       @if($leader->id == session('id'))
@@ -131,6 +153,7 @@
       </div>
       @endforeach
     </div>
+
   </div>
 </div>
 @endsection

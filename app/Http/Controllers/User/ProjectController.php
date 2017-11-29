@@ -25,62 +25,32 @@ class ProjectController extends Controller
       $my_projects = Project::where('user_id', Session::get('id'))->with('team')->get();
 
       $accepted_invites = RelTeamProject::where('accept', 1)->get(['team_id', 'project_id']);
-
-      //dd($accepted_invites);
-
-      //$d = Team::where('id', 8)->where('leader_id', Session::get('id'))->get(['id']);
-
-      //dd($d);
-      /*
-      $data_array = array();
-      $index = 0;
-      $has_data = false;
-
-      foreach ($accepted_invites as $invite) {
-        $data_array['my_teams_ids'] = [
-           Team::where('id', $invite->team_id)->where('leader_id', Session::get('id'))->first()['id'],
-        ];
-
-        if($data_array['my_teams_ids'][0] !== null){
-
-        }else{
-          $has_data = false;
+      $project_join=DB::table('team_project')
+                    ->join('teams','teams.id','=','team_project.team_id')
+                    ->where('team_project.accept',2)
+                    ->where('teams.leader_id',session('id'))
+                    ->join('projects','projects.id','=','team_project.project_id')
+                    ->get();
+      $pro =NULL;
+      foreach ($project_join as $invite) {
+        $pr=Project::where('id', $invite->project_id)->with('team')->get();
+        if($pro==NULL){
+          $pro=$pr;
         }
-
-
-        foreach ($data_array[$index]['my_teams_ids'] as $team_id) {
-          $data_array['joined_project_ids'] = [
-               RelTeamProject::where('team_id', $team_id->id)->first()['project_id'],
-          ];
-
-          //dd($data_array['joined_project_ids']);
-          foreach ($data_array['joined_project_ids'] as $project_id) {
-            $data_array['joined_projects'] = [
-               Project::where('id', $project_id)->with('team')->get(),
-            ];
-          }
+        else{
+        $pro=$pro->merge($pr);
         }
-
-        $index++;
       }
+      $rqsts=DB::table('team_project')
+                ->join('teams','teams.id','=','team_project.team_id')
+                ->where('teams.leader_id',session('id'))
+                ->where('team_project.accept',0)
+                ->get();
 
+      return view('user.projects.index')->with('projects', $my_projects)->with('joined_projects', $pro)
+                                        ->withRqsts(count($rqsts));
 
-
-      dd($data_array['joined_projects']);
-      /*
-      $projectss =DB::table('team_project')
-                      ->join('teams', 'teams.id', '=', 'team_project.team_id')
-                      ->join('projects','projects.id','=','team_project.project_id')
-                      ->where('teams.leader_id',session('id'))
-                      ->where('team_project.accept',1)
-                      ->get();
-      //erkm kore projects ante hobe..first ami kon team er leader..then oi team er project ki ki ache from team_project..then oi id gula theke project :3
-
-      dd($projectss);
-      */
-      $dummy = [['name' => 'goa', ''], ['name' => 'goa'], ['name' => 'goa'] , ['name' => 'goa']];
-      return view('user.projects.index')->with('projects', $my_projects)->with('joined_projects', $dummy);
-    }
+  }
 
     /**
      * Show the form for creating a new resource.
@@ -133,20 +103,61 @@ class ProjectController extends Controller
       try
       {
           $project = Project::findOrFail($id);
-
-          if($project->user_id === Session::get('id')){
-            $project_extra = json_decode($project->extra);
+          $permission =0;
+          $project_extra = json_decode($project->extra);
           $teams=DB::table('teams')
                     ->join('team_project','team_project.team_id',"=","teams.id")
                     ->where('team_project.project_id',$id)
                     ->where('team_project.accept',1)
+                    ->first();
+          $jteams=DB::table('teams')
+                    ->join('team_project','team_project.team_id',"=","teams.id")
+                    ->where('team_project.project_id',$id)
+                    ->where('team_project.accept',2)
                     ->get();
-            return view('user.projects.show')->with('project', $project)->with('extra', $project_extra)
-                                                                        -> withTeams($teams);
+          $cteam_member=DB::table('team_user')->where('team_id',$teams->team_id)->get();
+          if($teams->leader_id===Session::get('id')){
+              $permission=1;
           }
+          foreach ($cteam_member as $mem) {
+            if($mem->user_id===Session::get('id')){
+              $permission=1;
+              break;
+            }
+          }
+          if(count($jteams)!=0){
+          $jteams_members=NULL;
+          /**/
+          foreach ($jteams as $jt) {
+            if($jt->leader_id===Session::get('id')){
+              $permission=1;
+            }
+            $mem=DB::table('team_user')->where('team_id',$jt->team_id)->get();
+            if($jteams_members==NULL){
+              $jteams_members=$mem;
+            }
+            else{
+              $jteams_members=$jteams_members->merge($mem);
+            }
+          }
+          foreach ($jteams_members as $jt) {
+            if($jt->user_id===Session::get('id')){
+              $permission=1;
+              break;
+            }
+          }
+        }
 
+          if($permission){
+          return view('user.projects.show')->with('project', $project)->with('extra', $project_extra)->withTest($jteams)
+                                                                        ->withCteams($teams)
+                                                                        ->withJteams($jteams);
+
+              }
+          else{
           Session::flash('fail', 'Your requested project does not exist !');
           return redirect()->route('projects.index');
+        }
       }
       catch(ModelNotFoundException $e)
       {
@@ -251,12 +262,12 @@ class ProjectController extends Controller
 
       if($request->input('select')==0){
         $teams=DB::table('teams')
-                  ->where('description','LIKE','%'.$request->input('search').'%')
+                  ->where('name','LIKE','%'.$request->input('search').'%')
                   ->get();
       }
       elseif($request->input('select')==1){
         $teams=DB::table('teams')
-                  ->where('name','LIKE','%'.$request->input('search').'%')
+                  ->where('description','LIKE','%'.$request->input('search').'%')
                   ->get();
       }
 
@@ -353,7 +364,7 @@ class ProjectController extends Controller
       }
       else{
         DB::table('team_project')->where('team_project_id',$id)
-                                  ->update(['accept'=>1]);
+                                  ->update(['accept'=>2]);
         Session::flash('success', 'Successfully Accepted !');
         return redirect()->route('project.requests');
       }

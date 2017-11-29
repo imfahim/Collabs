@@ -65,7 +65,7 @@ Unverified User!
     {{ csrf_field() }}
     <input type="hidden" name="user_id" value="{{ $users->userId }}" />
     <div class="form-group">
- <label for="comment">Details:</label>
+ <label for="comment">Message:</label>
  <textarea class="form-control" rows="5" name="details"></textarea>
 </div>
   <button type="submit" class="btn btn-primary">Hire</button><br><br>

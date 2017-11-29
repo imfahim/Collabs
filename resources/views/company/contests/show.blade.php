@@ -1,6 +1,7 @@
 @extends ('company.layouts.options')
 
 @section('content')
+
   <div class="row">
     <div class="col-md-12">
       <div class="card">
@@ -37,7 +38,11 @@
               <tbody>
                   @foreach ($participants as $participant)
                     <tr>
-                      <th scope="row">{{ $participant['team_name'] }}</th>
+                      <th scope="row"><a href="{{route('team.details.company',[$participant['team_id']])}}">{{ $participant['team_name'] }}</a>
+                        @foreach($participant['teams'] as $team)
+                        ,<a href="{{route('team.details.company',[$team->team_id])}}">{{ $team->name }}</a>
+                        @endforeach
+                      </th>
                       <td>{{ $participant['project_name'] }}</td>
                       <td>
                         @if($participant['status'] === 1)

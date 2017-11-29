@@ -53,8 +53,34 @@ class HireController extends Controller
             ->where('company_id',session('id'))
             ->where('user_id',$request->input('user_id'))
             ->first();
-
-      if(count($user)==0){
+        if(count($user)==0){
+          if($request->has('who')){
+            DB::table('hire')->insert(
+                ['company_id'=>session('id'),'user_id'=>$request->input('user_id'),'accept'=>4,'details'=>$request->input('details')]
+            );
+            Session::flash('success', 'Request Sent!');
+          }
+          else{
+            DB::table('hire')->insert(
+                ['company_id'=>session('id'),'user_id'=>$request->input('user_id'),'details'=>$request->input('details')]
+            );
+            Session::flash('success', 'Request Sent!');
+          }
+        }
+        else{
+      if($request->has('who')){
+        if($user->accept!=4 ){
+        DB::table('hire')->insert(
+            ['company_id'=>session('id'),'user_id'=>$request->input('user_id'),'accept'=>4,'details'=>$request->input('details')]
+        );
+        Session::flash('success', 'Request Sent!');
+        }
+        else{
+          Session::flash('fail', 'Already Sent!');
+        }
+      }
+      else{
+      if($user->accept!=0 ){
       DB::table('hire')->insert(
           ['company_id'=>session('id'),'user_id'=>$request->input('user_id'),'details'=>$request->input('details')]
       );
@@ -63,7 +89,12 @@ class HireController extends Controller
       else{
         Session::flash('fail', 'Already Sent!');
       }
+    }
+  }
+
       return redirect()->route('hire.index');
+
+
     }
 
 
@@ -71,7 +102,13 @@ class HireController extends Controller
       $user= DB::table('hire')
             ->join('users','users.id','=','hire.user_id')
             ->where('company_id',session('id'))
+            ->where('accept','<',4)
             ->get();
-      return view('company.hire.invitations')->withUsers($user);
+      $team=DB::table('hire')
+            ->join('teams','teams.id','=','hire.user_id')
+            ->where('company_id',session('id'))
+            ->where('accept','>',3)
+            ->get();
+      return view('company.hire.invitations')->withUsers($user)->withTeams($team);
     }
 }

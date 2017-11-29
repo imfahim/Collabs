@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Company;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-
+use Illuminate\Support\Facades\DB;
 use App\Http\Requests\ContestRequest;
 use App\Contest;
 use App\Team;
@@ -25,7 +25,7 @@ class ContestController extends Controller
     public function index()
     {
         $contests = Contest::where('company_id', Session::get('id'))->get();
-        $contests_invitations = RelContestCompany::where('company_id', Session::get('id'))->get(['id']);
+        $contests_invitations = RelContestCompany::where('company_id', Session::get('id'))->where('status',0)->get(['id']);
 
         if($contests_invitations){
           $count_invitations = count($contests_invitations);
@@ -223,11 +223,21 @@ class ContestController extends Controller
                 $data_array[] = [
                   'id' => $participation->id,
                   'team_name' => Team::where('id', $participation->team_id)->first()['name'],
+                  'team_id' => Team::where('id', $participation->team_id)->first()['id'],
                   'project_id' => $participation->project_id,
                   'project_name' => Project::where('id', $participation->project_id)->first()['name'],
                   'status' => $participation->status,
+                  'teams'=>DB::table('team_project')
+                              ->join('teams','teams.id','=','team_project.team_id')
+                              ->where('team_project.project_id',$participation->project_id)
+                              ->where('team_project.accept',2)
+                              ->get(),
                 ];
+
               }
+
+
+
 
               return view('company.contests.show')->with('contest', $contest)->with('participants', $data_array);
             }

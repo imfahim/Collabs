@@ -21,7 +21,7 @@ No Job Offers Yet
   </div>
   <div class="panel-body">
     <label>Message:</label>
-    {{$us->details}}
+    {{$us->details}}<br>
   <a href="{{route('offers.companydetails', [$us->company_id]) }}" class="btn btn-sm btn-info">Company Details</a>
   </div>
 </div>

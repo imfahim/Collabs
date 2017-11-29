@@ -3,7 +3,14 @@
 @section('title', ' | Projects')
 
 @section('content')
+
   <div class="container-fluid">
+    <div class="card">
+      <div class="card-body">
+          <a href="{{ route('projects.create') }}"><button type="button" class="btn btn-primary">Create New</button></a>
+        <a href="{{ route('project.requests') }}"><button type="button" class="btn btn-warning pull-right">({{$rqsts}}) Project Requests</button></a>
+      </div><br><br>
+    </div>
     <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
     <li class="nav-item">
       <a class="nav-link active" id="pills-home-tab" data-toggle="pill" href="#pills-home" role="tab" aria-controls="pills-home" aria-selected="true">My Projects</a>
@@ -16,12 +23,6 @@
     <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
       <div class="row">
         <div class="col-md-12">
-          <div class="card">
-            <div class="card-body">
-                <a href="{{ route('projects.create') }}"><button type="button" class="btn btn-primary">Create New</button></a>
-              <a href="{{ route('project.requests') }}"><button type="button" class="btn btn-warning pull-right">Project Requests</button></a>
-            </div>
-          </div>
           <div class="card">
             <div class="col-md-12">
               <h3 class="text-muted">My Projects</h3>
@@ -43,7 +44,7 @@
                       <tr>
                         <th scope="row">{{ $project->name }}</th>
                         <td>{{ $project->details }}</td>
-                        <td>{{ 'Team '.$project->team->name }}</td>
+                        <td><a href="{{route('team.details',[$project->team->id])}}">{{ 'Team '.$project->team->name }}<a></td>
                         <td>{{ ($project->status) ? 'Development Phase' : 'Finished' }}</td>
                         <td>
                             <div class="btn-group">
@@ -75,17 +76,41 @@
       <div class="row">
         <div class="col-md-12">
           <div class="card">
-            <div class="card-body">
-                <a href="{{ route('projects.create') }}"><button type="button" class="btn btn-primary">Create New</button></a>
-              <a href="{{ route('project.requests') }}"><button type="button" class="btn btn-warning pull-right">Project Requests</button></a>
-            </div>
-          </div>
-          <div class="card">
             <div class="col-md-12">
               <h3 class="text-muted">Joined Projects</h3>
             </div>
             <div class="card-body">
-              <!-- snippet.txt -Line-1 -->
+              <div class="card-body">
+                @if ($joined_projects)
+                  <table class="table table-striped" data-form="deleteForm">
+                    <thead>
+                      <tr>
+                        <th scope="col">Name</th>
+                        <th scope="col">Details</th>
+                        <th scope="col">Managed By</th>
+                        <th scope="col">Status</th>
+                        <th scope="col">Actions</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      @foreach ($joined_projects as $project)
+                        <tr>
+                          <th scope="row">{{ $project->name }}</th>
+                          <td>{{ $project->details }}</td>
+                          <td><a href="{{route('team.details',[$project->team->id])}}">{{ 'Team '.$project->team->name }}</a></td>
+                          <td>{{ ($project->status) ? 'Development Phase' : 'Finished' }}</td>
+                          <td>
+                              <div class="btn-group">
+                                <a href="{{ route('projects.show', [$project->id]) }}" class="btn btn-sm btn-info" role="button">Show</a>
+                              </td>
+                        </tr>
+                      @endforeach
+                    </tbody>
+                  </table>
+                @else
+                  No Content's Yet, Please Add a new entity.
+                @endif
+              </div>
             </div>
           </div>
 
