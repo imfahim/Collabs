@@ -31,7 +31,7 @@ No Invitations Sent Yet
 @endif
   </div>
   <div class="panel-body">
-    Leadeder:<label>{{$us->leader_name}}</label><br>
+    Leader:<label>{{$us->leader_name}}</label><br>
     <label>Message:</label>
     {{$us->details}}
   </div>
