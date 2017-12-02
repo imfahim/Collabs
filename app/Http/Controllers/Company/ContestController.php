@@ -25,7 +25,18 @@ class ContestController extends Controller
     public function index()
     {
         $contests = Contest::where('company_id', Session::get('id'))->get();
-        $contests_invitations = RelContestCompany::where('company_id', Session::get('id'))->where('status',0)->get(['id']);
+        $contests_invitations = RelContestCompany::where('company_id', Session::get('id'))->where('status', 0)->get(['id']);
+        $joined_contests_ids = RelContestCompany::where('company_id', Session::get('id'))->where('status', 1)->get(['contest_id']);
+
+        $joined_contests = array();
+
+        if(!$joined_contests_ids->isEmpty()){
+          foreach ($joined_contests_ids as $contest) {
+            $joined_contests[] = Contest::where('id', $contest->contest_id)->first();
+          }
+        }
+
+        //dd($joined_contests);
 
         if($contests_invitations){
           $count_invitations = count($contests_invitations);
@@ -34,7 +45,7 @@ class ContestController extends Controller
         }
 
         Session::put('menu', 'contest');
-        return view('company.contests.index')->with('contests', $contests)->with('count_invitations', $count_invitations);
+        return view('company.contests.index')->with('contests', $contests)->with('count_invitations', $count_invitations)->with('joined_contests', $joined_contests);
     }
 
     /**
@@ -181,9 +192,15 @@ class ContestController extends Controller
     public function invitation_accept(Request $request){
       $invitation = RelContestCompany::find($request->id);
 
-      $invitation->status = 1;
+      $invitation->status = 0;
 
       $invitation->save();
+
+      $contest = Contest::find($invitation->contest_id);
+
+      $contest->status = 0;
+
+      $contest->save();
 
       Session::flash('success', 'Successfully Accepted !');
       return redirect()->route('company.invitations.list');
@@ -196,6 +213,11 @@ class ContestController extends Controller
 
       $invitation->save();
 
+      $contest = Contest::find($invitation->contest_id);
+
+      $contest->status = 1;
+
+      $contest->save();
       //Contest::destroy($invitation->contest_id);
 
       Session::flash('success', 'Successfully Rejected !');
@@ -213,8 +235,9 @@ class ContestController extends Controller
         try
         {
             $contest = Contest::findOrFail($id);
+            $joined = RelContestCompany::where('contest_id', $id)->where('status', 1)->first();
 
-            if($contest->company_id === Session::get('id')){
+            if($contest->company_id === Session::get('id') || $joined->company_id === Session::get('id')){
               $participations = RelContestUser::where('contest_id', $contest->id)->get(['id', 'team_id', 'project_id', 'status']);
 
               $data_array = array();
@@ -263,8 +286,9 @@ class ContestController extends Controller
         try
         {
             $contest = Contest::findOrFail($id);
+            $joined = RelContestCompany::where('contest_id', $id)->where('status', 1)->first();
 
-            if($contest->company_id === Session::get('id')){
+            if($contest->company_id === Session::get('id') || $joined->company_id === Session::get('id')){
 
               /*
               $old_start_date = str_replace('-', '/', $contest->start_on);
@@ -351,8 +375,9 @@ class ContestController extends Controller
         try
         {
             $contest = Contest::findOrFail($request->id);
+            $joined = RelContestCompany::where('contest_id', $id)->where('status', 1)->first();
 
-            if($contest->company_id === Session::get('id')){
+            if($contest->company_id === Session::get('id') || $joined->company_id === Session::get('id')){
               // For deleting multiple rows pass the array of ids
               Contest::destroy($request->id);
 

@@ -78,7 +78,11 @@
           </div>
         </div>
       </div>
-      <div id="contest-info">
+      @if (Session::has('success'))
+        <div id="contest-info">
+      @else
+        <div id="contest-info" class="hidden">
+      @endif    
         <div class="row">
           <div class="col-md-12">
             <div class="card">
