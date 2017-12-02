@@ -93,6 +93,9 @@
     <div class="card">
       <div class="card-body">
           <p class="lead"><a href="{{route('team.details',[$team->id])}}">{{$team->name}}</a></p>
+          @if($team->leader_id==session('id'))
+          <a href="" class="btn btn-danger pull-right">Leave</a>
+          @endif
           <p>leaded by- {{$team->leader_name}}</p>
       </div>
     </div>

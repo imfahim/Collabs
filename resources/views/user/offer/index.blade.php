@@ -6,6 +6,7 @@
 @if(count($offers)==0 && count($teamoffers)==0)
 No Job Offers Yet
 @endif
+
 @foreach($offers as $us)
 <div class="panel panel-default">
   <div class="panel-heading">
@@ -27,6 +28,7 @@ No Job Offers Yet
 </div>
 @endforeach
 <!--team offers-->
+<label>Team Offers:</label>
 @foreach($teamoffers as $us)
 <div class="panel panel-default">
   <div class="panel-heading">

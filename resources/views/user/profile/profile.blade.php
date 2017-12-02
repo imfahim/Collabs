@@ -93,7 +93,7 @@
 					<input type="hidden" name="id" value="{{ $user->id }}" />
 					{{ csrf_field() }}
 
-					<table>
+					<table class="table table-striped">
 					<tr>
 						<td style='width:20%; font-weight: bold;'>Name: </td>
 						<td>{{ $user->name}}</td>

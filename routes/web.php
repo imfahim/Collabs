@@ -25,6 +25,12 @@ Route::group(['middleware' => 'access.guest'], function(){
 
 Route::group(['middleware' => 'access.auth'], function(){
   Route::get('teams/details/{id}', 'User\TeamController@details')->name('team.details.company');
+  Route::get('profileOf/{id}', 'UserController@profile')->name('profile.view');
+  Route::get('message/{id}', 'UserController@getMessage')->name('messageOf');
+  Route::post('message/{id}', 'UserController@sendMessage')->name('messageOf');
+
+  Route::get('messages', 'UserController@messages')->name('message');
+
   Route::group(['prefix' => 'user', 'middleware' => 'access.user'], function(){
     Route::get('/', 'User\HomeController@index')->name('user.home');
 

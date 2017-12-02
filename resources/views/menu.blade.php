@@ -43,6 +43,9 @@
       </ul>
       <ul class="navbar-nav ml-auto pull-right">
         <li class="nav-item">
+          <a class="nav-link" href="{{ route('message') }}">Messages</a>
+        </li>
+        <li class="nav-item">
           <a class="nav-link" href="{{ route('logout') }}">Logout</a>
         </li>
       </ul>
