@@ -328,6 +328,33 @@ class ContestController extends Controller
         }
     }
 
+    public function show_public($id)
+    {
+        try
+        {
+            $contest = Contest::findOrFail($id);
+            $joined = RelContestCompany::where('contest_id', $id)->where('status', 1)->first();
+            $company_ids = RelContestCompany::where('contest_id', $id)->where('status', 1)->get(['company_id']);
+
+            $companies = array();
+
+            if(!$company_ids->isEmpty()){
+              foreach ($company_ids as $company) {
+                $companies[] = User::where('id', $company->company_id)->first(['id', 'name', 'email']);
+              }
+            }
+
+            $owner = User::where('id', $contest->company_id)->first(['id', 'name', 'email']);
+
+            return view('company.contests.details')->with('contest', $contest)->with('companies', $companies)->with('owner', $owner);
+        }
+        catch(ModelNotFoundException $e)
+        {
+          Session::flash('fail', 'Your requested contest does not exist !'.' Server Error : '.$e);
+          return redirect()->route('contests.index');
+        }
+    }
+
     /**
      * Show the form for editing the specified resource.
      *

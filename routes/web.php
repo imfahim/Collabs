@@ -26,10 +26,19 @@ Route::group(['middleware' => 'access.guest'], function(){
 Route::group(['middleware' => 'access.auth'], function(){
   Route::get('teams/details/{id}', 'User\TeamController@details')->name('team.details.company');
   Route::get('profileOf/{id}', 'UserController@profile')->name('profile.view');
+  Route::get('contest/{id}', 'Company\ContestController@show_public')->name('contest.public.details');
   Route::get('message/{id}', 'UserController@getMessage')->name('messageOf');
   Route::post('message/{id}', 'UserController@sendMessage')->name('messageOf');
 
   Route::get('messages', 'UserController@messages')->name('message');
+
+  Route::get('browse/users', 'CommonController@browse_users')->name('browse.users');
+  Route::post('browse/users', 'CommonController@search_users')->name('browse.users.search');
+  Route::get('browse/teams', 'CommonController@browse_teams')->name('browse.teams');
+  Route::post('browse/teams', 'CommonController@search_teams')->name('browse.teams.search');
+  Route::get('browse/contests', 'CommonController@browse_contests')->name('browse.contests');
+  Route::post('browse/contests', 'CommonController@search_contests')->name('browse.contests.search');
+
 
   Route::group(['prefix' => 'user', 'middleware' => 'access.user'], function(){
     Route::get('/', 'User\HomeController@index')->name('user.home');

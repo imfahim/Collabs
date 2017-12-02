@@ -14,4 +14,8 @@ class Team extends Model
   {
       return $this->belongsToMany('App\Contest');
   }
+
+  public function user(){
+    return $this->belongsTo('App\User');
+  }
 }

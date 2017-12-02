@@ -1,5 +1,7 @@
 @extends ('company.layouts.options')
 
+@section('title', ' | Contests - Show')
+
 @section('content')
 
   <div class="row">
