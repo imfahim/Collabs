@@ -20,12 +20,12 @@
               @if($mm->from_id==session('id'))
               <div class="media-body" style="text-align: right;">
                 <h4 class="media-heading"><small><i>{{$mm->time}}</i></small></h4>
-                <p style="background-color:#4080FF;display: inline;padding: 0px 15px;border-radius: 25px;color:white;">{{$mm->messages}}</p>
+                <p style="background-color:#4080FF;display: inline;padding: 0px 15px;border-radius: 25px;color:white;word-wrap: break-word;">{{$mm->messages}}</p>
               </div>
               @else
               <div class="media-body" style="text-align: left;">
                 <h4 class="media-heading"><small><i>{{$mm->time}}</i></small></h4>
-                <p style="background-color:#F1F0F0;display: inline;padding: 0px 15px;border-radius: 25px">{{$mm->messages}}</p>
+                <p style="background-color:#F1F0F0;display: inline;padding: 0px 15px;border-radius: 25px;word-wrap: break-word;">{{$mm->messages}}</p>
               </div>
               @endif
               </div>

@@ -3,9 +3,7 @@
 @section('title', ' | Teams - Requests')
 
 @section('content')
-<pre>
-  <?php print_r($projects); ?>
-</pre>
+
 <a href="{{ URL::previous() }}" class="btn btn-primary">Back</a><br><br>
   @if($has!=0)
   @foreach($projects as $jin)

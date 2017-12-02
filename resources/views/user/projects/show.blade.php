@@ -55,6 +55,7 @@
       </div>
     </div>
     <div class="col-md-4">
+
       @if($cteams->leader_id==session('id'))
       <div class="card">
         <div class="card-body">
@@ -88,13 +89,12 @@
           </p>
       </div>
     </div>
-
   @foreach($jteams as $team)
     <div class="card">
       <div class="card-body">
           <p class="lead"><a href="{{route('team.details',[$team->id])}}">{{$team->name}}</a></p>
           @if($team->leader_id==session('id'))
-          <a href="" class="btn btn-danger pull-right">Leave</a>
+          <a href="{{route('project.leave',[$team->team_project_id,$team->leader_id])}}" class="btn btn-danger pull-right">Leave</a>
           @endif
           <p>leaded by- {{$team->leader_name}}</p>
       </div>

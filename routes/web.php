@@ -59,6 +59,7 @@ Route::group(['middleware' => 'access.auth'], function(){
 
     Route::get('projects/searchteam/{id}', 'User\ProjectController@searchteam')->name('project.searchteam');
     Route::post('projects/searchteam/{id}', 'User\ProjectController@searchresult')->name('project.searchteam');
+    Route::get('projects/leave/{id}/{lid}','User\ProjectController@pro_leave')->name('project.leave');
 
     Route::get('teams/invite/{teamid}/{userid}', 'User\TeamController@invite')->name('team.invite');
     Route::get('project/invite/{projectid}/{teamid}', 'User\ProjectController@invite')->name('project.invite');

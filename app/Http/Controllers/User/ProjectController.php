@@ -108,7 +108,7 @@ class ProjectController extends Controller
           $teams=DB::table('teams')
                     ->join('team_project','team_project.team_id',"=","teams.id")
                     ->where('team_project.project_id',$id)
-                    ->where('team_project.accept',1)
+                    ->where('team_project.accept',1) //accept 1 means team created this project
                     ->first();
           $jteams=DB::table('teams')
                     ->join('team_project','team_project.team_id',"=","teams.id")
@@ -369,5 +369,17 @@ class ProjectController extends Controller
         return redirect()->route('project.requests');
       }
 
+    }
+    public function pro_leave($id,$lid){
+      if($lid==session('id')){
+        DB::table('team_project')->where('team_project_id', $id)->delete();
+
+        Session::flash('success', 'Successfully Removed !');
+        return redirect()->route('projects.index');
+      }
+      else{
+        Session::flash('fail', 'Request Denied !');
+        return redirect()->route('projects.index');
+      }
     }
 }
