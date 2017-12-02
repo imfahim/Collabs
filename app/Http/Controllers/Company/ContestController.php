@@ -146,6 +146,49 @@ class ContestController extends Controller
         return redirect()->route('contests.index');
     }
 
+    public function request_invite(Request $request){
+
+      $count_selected_companies = count($request->companies);
+
+      if($count_selected_companies > 1){
+        for($iteration = 0; $iteration < $count_selected_companies; $iteration++){
+          $check = RelContestCompany::where('contest_id', $request->contest_id)->where('company_id', $request->companies[$iteration])->first();
+
+          if(!$check){
+            $contest_company = new RelContestCompany;
+
+            $contest_company->user_id = Session::get('id');
+            $contest_company->contest_id = $request->contest_id;
+            $contest_company->company_id = $request->companies[$iteration];
+            $contest_company->message = $request->message;
+
+            $contest_company->save();
+          }else{
+            Session::flash('fail', 'Some Selected Companies already got the invitation !');
+          }
+        }
+      }else{
+        $check = RelContestCompany::where('contest_id', $request->contest_id)->where('company_id', $request->companies[0])->first();
+
+        if(!$check){
+          $contest_company = new RelContestCompany;
+
+          $contest_company->user_id = Session::get('id');
+          $contest_company->contest_id = $request->contest_id;
+          $contest_company->company_id = $request->companies[0];
+          $contest_company->message = $request->message;
+
+          $contest_company->save();
+        }else{
+          Session::flash('fail', 'Some Selected Companies already got the invitation !');
+          return redirect()->back();
+        }
+      }
+
+      Session::flash('success', 'Contest Successfully Requested !');
+      return redirect()->back();
+    }
+
     public function show_invitation_list(Request $request){
       $contests_invitations_sent = RelContestCompany::where('user_id', Session::get('id'))->get(['contest_id', 'company_id', 'message', 'status']);
       $contests_invitations_received = RelContestCompany::where('company_id', Session::get('id'))->where('status', 0)->get(['id', 'user_id', 'contest_id', 'message']);
@@ -192,7 +235,7 @@ class ContestController extends Controller
     public function invitation_accept(Request $request){
       $invitation = RelContestCompany::find($request->id);
 
-      $invitation->status = 0;
+      $invitation->status = 1;
 
       $invitation->save();
 
@@ -236,8 +279,18 @@ class ContestController extends Controller
         {
             $contest = Contest::findOrFail($id);
             $joined = RelContestCompany::where('contest_id', $id)->where('status', 1)->first();
+            $company_ids = RelContestCompany::where('contest_id', $id)->where('status', 1)->get(['company_id']);
+
+            $companies = array();
+
+            if(!$company_ids->isEmpty()){
+              foreach ($company_ids as $company) {
+                $companies[] = User::where('id', $company->company_id)->first(['id', 'name', 'email']);
+              }
+            }
 
             if($contest->company_id === Session::get('id') || $joined->company_id === Session::get('id')){
+              $owner = User::where('id', $contest->company_id)->first(['id', 'name', 'email']);
               $participations = RelContestUser::where('contest_id', $contest->id)->get(['id', 'team_id', 'project_id', 'status']);
 
               $data_array = array();
@@ -262,7 +315,7 @@ class ContestController extends Controller
 
 
 
-              return view('company.contests.show')->with('contest', $contest)->with('participants', $data_array);
+              return view('company.contests.show')->with('contest', $contest)->with('participants', $data_array)->with('companies', $companies)->with('owner', $owner);
             }
 
             Session::flash('fail', 'Your requested contest does not exist !');
@@ -393,6 +446,21 @@ class ContestController extends Controller
           Session::flash('fail', 'Your requested contest does not exist !'.' Server Error : '.$e);
           return redirect()->route('contests.index');
         }
+    }
+
+    public function new_invite($contest_id){
+      if(Session::has('success') && Session::get('success') === 'Successfully Found !'){
+        if(Session::has('companies')){
+          $companies = Session::get('companies');
+          return view('company.contests.invite')->with('companies', $companies)->with('contest_id', $contest_id);
+        }else{
+          $companies = '';
+          return view('company.contests.invite')->with('companies', $companies)->with('contest_id', $contest_id);
+        }
+      }else{
+        $companies = '';
+        return view('company.contests.invite')->with('companies', $companies)->with('contest_id', $contest_id);
+      }
     }
 
 }

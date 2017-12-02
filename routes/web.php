@@ -100,6 +100,9 @@ Route::group(['middleware' => 'access.auth'], function(){
 
     Route::post('contests/find/company', 'UserController@search_companies_by_name')->name('companies.find.by.name');
 
+    Route::get('contests/{contest_id}/companies/invite', 'Company\ContestController@new_invite')->name('company.new.invite');
+    Route::post('contests/companies/invite', 'Company\ContestController@request_invite')->name('company.request.invite');
+
 
 
 

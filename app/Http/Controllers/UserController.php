@@ -14,23 +14,26 @@ class UserController extends Controller
     }
     public function profile($id){
       $pro=DB::table('users')
-                  ->join('userdetails','userdetails.userId','=','users.id')
                   ->where('users.id',$id)
                   ->first();
-      if($pro->type==0){
-        $profile=DB::table('users')
-                    ->join('userdetails','userdetails.userId','=','users.id')
-                    ->where('users.id',$id)
-                    ->first();
-      }
-        else{
+      if($pro){
+        if($pro->type==0){
           $profile=DB::table('users')
-                      ->join('companydetails','companydetails.companyId','=','users.id')
+                      ->join('userdetails','userdetails.userId','=','users.id')
                       ->where('users.id',$id)
                       ->first();
         }
-      return view('common.profile')->withProfile($profile);
-
+          else{
+            $profile=DB::table('users')
+                        ->join('companydetails','companydetails.companyId','=','users.id')
+                        ->where('users.id',$id)
+                        ->first();
+          }
+        return view('common.profile')->withProfile($profile);
+      }else{
+        Session::flash('fail', 'User not found !');
+        return redirect()->back();
+      }
     }
     public function messages(){
       $msg=DB::table('user_relation')
