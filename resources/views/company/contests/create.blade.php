@@ -3,7 +3,15 @@
 @section('title', ' | Contests - Create')
 
 @section('content')
+
   <div class="container-fluid">
+    <div class="card">
+      <div class="card-body">
+        <div class="pull-left">
+          <a href="{{ route('contests.index') }}"><button type="button" class="btn btn-primary">Back</button></a>
+        </div>
+      </div>
+    </div>
     <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
     <li class="nav-item">
       <a class="nav-link active" id="pills-home-tab" data-toggle="pill" href="#pills-home" role="tab" aria-controls="pills-home" aria-selected="true">Create a Request for Contest</a>
@@ -17,13 +25,7 @@
       <div id="search-info">
         <div class="row">
           <div class="col-md-12">
-            <div class="card">
-              <div class="card-body">
-                <div class="pull-left">
-                  <a href="{{ route('contests.index') }}"><button type="button" class="btn btn-primary">Back</button></a>
-                </div>
-              </div>
-            </div>
+
             <div class="card">
               <div class="card-body">
                 <div class="col-md-12">
@@ -137,13 +139,7 @@
     <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
       <div class="row">
         <div class="col-md-12">
-          <div class="card">
-            <div class="card-body">
-              <div class="pull-left">
-                <a href="{{ route('contests.index') }}"><button type="button" class="btn btn-primary">Back</button></a>
-              </div>
-            </div>
-          </div>
+
           <div class="card">
             <div class="card-body">
               <form method="POST" action="{{ route('contests.store') }}">

@@ -6,7 +6,7 @@
 <div class="row">
   <div class="col-lg-3 col-sm-6">
     <div class="circle-tile ">
-      <a href="#"><div class="circle-tile-heading dark-blue"><i class="fa fa-user fa-fw fa-3x"></i></div></a>
+      <a href="{{route('browse.users')}}"><div class="circle-tile-heading dark-blue"><i class="fa fa-user fa-fw fa-3x"></i></div></a>
       <div class="circle-tile-content dark-blue">
         <div class="circle-tile-description text-faded">Total Users</div>
         <div class="circle-tile-number text-faded ">{{ $users_count }}</div>
@@ -16,7 +16,7 @@
 
   <div class="col-lg-3 col-sm-6">
     <div class="circle-tile ">
-      <a href="#"><div class="circle-tile-heading red"><i class="fa fa-users fa-fw fa-3x"></i></div></a>
+      <a href="{{route('browse.teams')}}"><div class="circle-tile-heading red"><i class="fa fa-users fa-fw fa-3x"></i></div></a>
       <div class="circle-tile-content red">
         <div class="circle-tile-description text-faded"> Total Teams </div>
         <div class="circle-tile-number text-faded ">{{ $teams_count }}</div>
@@ -34,7 +34,7 @@
   </div>
   <div class="col-lg-3 col-sm-6">
     <div class="circle-tile ">
-      <a href="#"><div class="circle-tile-heading orange"><i class="fa fa-trophy fa-fw fa-3x"></i></div></a>
+      <a href="{{route('browse.contests')}}"><div class="circle-tile-heading orange"><i class="fa fa-trophy fa-fw fa-3x"></i></div></a>
       <div class="circle-tile-content orange">
         <div class="circle-tile-description text-faded"> Total Contests </div>
         <div class="circle-tile-number text-faded ">{{ $contests_count }}</div>

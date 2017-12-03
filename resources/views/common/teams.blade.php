@@ -1,4 +1,4 @@
-@extends ('company.layouts.options')
+@extends(session('is_user')? 'user.layouts.options' : 'company.layouts.options')
 
 @section('title', ' | Browse Teams')
 

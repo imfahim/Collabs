@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\DB;
 use App\User;
 use App\Team;
 use App\Contest;
@@ -13,7 +13,7 @@ use Session;
 class CommonController extends Controller
 {
     public function browse_users(){
-      $all_users = User::all(['id', 'name', 'email', 'type'])->take(8);
+      $all_users = User::all(['id', 'name', 'email', 'type']);
 
       if(Session::has('success') && Session::get('success') === 'Successfully Found !'){
         if(Session::has('users')){
@@ -31,7 +31,7 @@ class CommonController extends Controller
     }
 
     public function browse_teams(){
-      $all_teams = Team::where('status', 0)->take(8)->get(['id', 'name', 'total_member', 'existing_member']);
+      $all_teams = Team::where('status', 0)->get(['id', 'name', 'total_member', 'existing_member']);
 
       if(Session::has('success') && Session::get('success') === 'Successfully Found !'){
         if(Session::has('teams')){
@@ -49,7 +49,7 @@ class CommonController extends Controller
     }
 
     public function browse_contests(){
-      $all_contests = Contest::where('status', 0)->take(8)->get(['id', 'title', 'start_on', 'close_on']);
+      $all_contests = Contest::where('status', 0)->get(['id', 'title', 'start_on', 'close_on']);
 
       if(Session::has('success') && Session::get('success') === 'Successfully Found !'){
         if(Session::has('contests')){
