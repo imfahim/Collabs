@@ -7,6 +7,10 @@
   <a href="{{ URL::previous() }}" class="btn btn-primary">Back</a>
   <br />
   <br />
+  <div class="panel panel-default">
+    <div class="panel-heading">Description</div>
+    <div class="panel-body">{{$leader->description}}</div>
+  </div>
   <div class="row">
     <div class="col-md-6">
       @if($parbe==1)
@@ -126,6 +130,7 @@
       @endif
     </div>
     <div class="col-md-6">
+
       @if($leader->id == session('id'))
       <a href="{{route('team.searchuser',[$teamid])}}" class="btn btn-primary">Add User</a><br><br>
       @endif

@@ -22,14 +22,41 @@ class UserController extends Controller
                       ->join('userdetails','userdetails.userId','=','users.id')
                       ->where('users.id',$id)
                       ->first();
+          if(count($profile)!=0){
+          $teams=DB::table('teams')->select('id')->where('leader_id',$id)->get();
+          $jteams=DB::table('team_user')->select('team_id as id')->where('user_id',$id)->where('invite',1)->get();
+          $teams=$teams->merge($jteams);
+          $pro=NULL;
+          foreach ($teams as $team) {
+            foreach ($team as $t) {
+
+            if($pro==null){
+              $pro=DB::table('team_project')->where('team_id',$t)->where('accept','>',0)->get();
+            }
+            else{
+              $qpro=DB::table('team_project')->where('team_id',$t)->where('accept','>',0)->get();
+              $pro=$pro->merge($qpro);
+            }
+            }
+          }
+          $today = date("Y-m-d");
+          $age = date_diff(date_create($profile->dateOfBirth), date_create($today));
+          $edu=DB::table('user_educations')->where('user_id',$id)->where('edu/job',0)->get();
+          $job=DB::table('user_educations')->where('user_id',$id)->where('edu/job',1)->get();
+          return view('common.profile')->withProfile($profile)->withDone(count($pro))->withAge($age->y)->withEdu($edu)->withJob($job);
+        }
+        else{
+          return view('common.profile');
+        }
         }
           else{
             $profile=DB::table('users')
                         ->join('companydetails','companydetails.companyId','=','users.id')
                         ->where('users.id',$id)
                         ->first();
+            return view('common.profile')->withProfile($profile);
           }
-        return view('common.profile')->withProfile($profile);
+
       }else{
         Session::flash('fail', 'User not found !');
         return redirect()->back();

@@ -3,16 +3,12 @@
 @section('title', ' | Developer Profile')
 
 @section('content')
-<pre>
-  <?php print_r($edu);
-?>
-</pre>
 <div class="container-fluid">
   <div class="panel panel-default">
     <div class="panel-heading"><center><h4>{{session('username')}}</center></h4></div>
   </div>
   <div class="row">
-    @if(isset($nai))
+    @if(!isset($nai))
     <div class="col-md-4">
       <div class="panel panel-default">
         <div class="panel-heading">Personal Information</div>

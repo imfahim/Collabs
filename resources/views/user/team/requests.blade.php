@@ -3,6 +3,7 @@
 @section('title', ' | Teams - Requests')
 
 @section('content')
+<div class="container-fluid">
 <a href="{{ URL::previous() }}" class="btn btn-primary">Back</a><br><br>
   @if($has!=0)
   @foreach($teams as $jin)
@@ -32,5 +33,5 @@
   @else
   No Requests To Show
   @endif
-
+    </div>
 @endsection

@@ -8,6 +8,7 @@
 @endsection
 
 @section('content')
+<div class="container-fliud">
   <div class="row">
 
     <div class="col-md-8">
@@ -92,9 +93,16 @@
         <div class="card-body">
           @if ($has_data)
             @foreach ($joined_contests as $data)
-              <div class="card" style="width: 50rem;">
+              <div class="card">
                 <div class="card-body">
-                  <div class="pull-left">
+                  <div class="pull-right">
+                    <form method="POST" action="{{ route('user.contests.cancel') }}">
+                      {{ csrf_field() }}
+                      <input type="hidden" name="_method" value="delete" />
+                      <input type="hidden" name="id" value="{{ $data['id'] }}" />
+                      <input type="submit" class="btn btn-sm btn-danger" value="Cancel Participation" />
+                    </form>
+                  </div>
                     <h6 class="card-subtitle mb-2 text-muted">Participated Team : {{ $data['team_name'] }}</h6>
                     <h6 class="card-subtitle mb-2 text-muted">Submitted Project : {{ $data['project_name'] }}</h6>
                     <h6 class="card-subtitle mb-2 text-muted">Status :
@@ -106,15 +114,8 @@
                         <span class="label label-warning">On Review</span></h6>
                       @endif
                     <p class="card-text"><strong>{{ $data['contest_name'] }}</strong></p>
-                  </div>
-                  <div class="pull-right">
-                    <form method="POST" action="{{ route('user.contests.cancel') }}">
-                      {{ csrf_field() }}
-                      <input type="hidden" name="_method" value="delete" />
-                      <input type="hidden" name="id" value="{{ $data['id'] }}" />
-                      <input type="submit" class="btn btn-sm btn-danger" value="Cancel Participation" />
-                    </form>
-                  </div>
+
+
                 </div>
               </div>
             @endforeach
@@ -124,7 +125,9 @@
         </div>
       </div>
     </div>
+        </div>
   </div>
+    </div>
 @endsection
 
 @section('page-scripts')

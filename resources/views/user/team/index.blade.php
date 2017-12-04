@@ -3,7 +3,7 @@
 @section('title', ' | Teams')
 
 @section('content')
-<div class="container-fluid">
+<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xs-12">
   <a href="{{route('team.create')}}" class="btn btn-primary">Create your Team</a>
   <a href="{{route('team.requests')}}" class="btn btn-warning pull-right">
     ({{$rqsts}})

@@ -25,7 +25,7 @@ Route::group(['middleware' => 'access.guest'], function(){
 
 Route::group(['middleware' => 'access.auth'], function(){
   Route::get('teams/details/{id}', 'User\TeamController@details')->name('team.details.company');
-  Route::get('profileOf/{id}', 'UserController@profile')->name('profile.view');
+  Route::get('profileOf/{id}', 'UserController@profile')->name('profileof.view');
   Route::get('contest/{id}', 'Company\ContestController@show_public')->name('contest.public.details');
   Route::get('message/{id}', 'UserController@getMessage')->name('messageOf');
   Route::post('message/{id}', 'UserController@sendMessage')->name('messageOf');

@@ -3,7 +3,8 @@
 @section('title', ' | Projects - Requests details')
 
 @section('content')
-<a href="{{ URL::previous() }}" class="btn btn-primary">Back</a><br><br>
+<div class="container-fluid">
+<a href="{{ URL::previous() }}" class="btn btn-primary">Back</a>
 <label>Project Name: </label>{{$project->name}}<br>
 <label>Managed By:</label>
 @foreach($teams as $us)
@@ -15,5 +16,5 @@
   </div>
 </div>
 @endforeach
-
+</div>
 @endsection

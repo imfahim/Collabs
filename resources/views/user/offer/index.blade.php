@@ -3,6 +3,7 @@
 @section('title', ' | Offers')
 
 @section('content')
+<div class="container-fluid">
 @if(count($offers)==0 && count($teamoffers)==0)
 No Job Offers Yet
 @endif
@@ -51,4 +52,5 @@ No Job Offers Yet
   </div>
 </div>
 @endforeach
+</div>
 @endsection
