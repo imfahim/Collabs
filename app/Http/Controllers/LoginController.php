@@ -29,6 +29,7 @@ class LoginController extends Controller
           if($check_password){
             Session::put('id', $user->id);
             Session::put('username', $user->name);
+            Session::put('email', $user->email);
             Session::put('logged_in', true);
 
             if($user->type == 1){

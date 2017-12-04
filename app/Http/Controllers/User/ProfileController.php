@@ -23,12 +23,12 @@ class ProfileController extends Controller
                       ->first();
 
 
-      if(!$userdetails){
+      /*if(!$userdetails){
         $users = DB::table('users')
                         ->where('id',Session::get('id'))
                         ->first();
         Session::put('menu', 'profile');
-        return view('user.profile.profile')->with('user',$users);
+        return view('user.profile.show');//->with('user',$users);
 
       }
 
@@ -37,12 +37,35 @@ class ProfileController extends Controller
         ->join('userdetails', 'users.id', '=', 'userdetails.userId')
         ->where('users.id', Session::get('id'))
         ->first();
+          */
+          //status=0
+          if(count($userdetails)!=0){
+    $teams=DB::table('teams')->select('id')->where('leader_id',Session::get('id'))->get();
+    $jteams=DB::table('team_user')->select('team_id as id')->where('user_id',Session::get('id'))->where('invite',1)->get();
+    $teams=$teams->merge($jteams);
+    $pro=NULL;
+    foreach ($teams as $team) {
+      foreach ($team as $t) {
 
-        //  dd($users->occupation);
-
-//aeta to ager cntroooer er :3 ar  db- _te -___-t_______o- join nai..
+      if($pro==null){
+        $pro=DB::table('team_project')->where('team_id',$t)->where('accept','>',0)->get();
+      }
+      else{
+        $qpro=DB::table('team_project')->where('team_id',$t)->where('accept','>',0)->get();
+        $pro=$pro->merge($qpro);
+      }
+      }
+    }
+    $edu=DB::table('user_educations')->where('user_id',Session::get('id'))->where('edu/job',0)->get();
+    $job=DB::table('user_educations')->where('user_id',Session::get('id'))->where('edu/job',1)->get();
+    $today = date("Y-m-d");
+    $age = date_diff(date_create($userdetails->dateOfBirth), date_create($today));
       Session::put('menu', 'profile');
-      return view('user.profile.profile')->with('user', $users);
+      return view('user.profile.show')->with('user', $userdetails)->withAge($age->y)->withTid($teams)->withDone(count($pro))->withEdu($edu)->withJob($job);
+     }
+     else{
+       return view('user.profile.show')->withNai('nai');
+     }
     }
 
     /**
