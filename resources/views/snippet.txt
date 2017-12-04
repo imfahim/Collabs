@@ -38,3 +38,49 @@
 @else
   No Content's Yet, Please Add a new entity.
 @endif
+
+
+
+// User Menu >
+
+<!--
+
+<li class="nav-item {{ session('menu') == 'home' ? 'active' : '' }}" data-toggle="tooltip" data-placement="right" title="Home">
+ <a class="nav-link" href="{{ route('user.home')}}">Home</a>
+</li>
+<li class="nav-item {{ session('menu') == 'profile' ? 'active' : '' }}" data-toggle="tooltip" data-placement="right" title="Profile">
+ <a class="nav-link" href="{{ route('profile.index')}}">Profile</a>
+</li>
+<li class="nav-item {{ session('menu') == 'team' ? 'active' : '' }}" data-toggle="tooltip" data-placement="right" title="Team">
+ <a class="nav-link" href="{{route('team')}}">Team</a>
+</li>
+<li class="nav-item {{ session('menu') == 'project' ? 'active' : '' }}" data-toggle="tooltip" data-placement="right" title="Project">
+ <a class="nav-link" href="{{ route('projects.index') }}">Project</a>
+</li>
+<li class="nav-item {{ session('menu') == 'offers' ? 'active' : '' }}" data-toggle="tooltip" data-placement="right" title="Offers">
+ <a class="nav-link" href="{{ route('offers') }}">Offers</a>
+</li>
+<li class="nav-item" data-toggle="tooltip" data-placement="right" title="Divider">
+ <hr />
+</li>
+<li class="nav-item {{ session('menu') == 'contest' ? 'active' : '' }}" data-toggle="tooltip" data-placement="right" title="Ongoing Contests">
+ <a class="nav-link" href="{{ route('user.contests.index') }}">Ongoing Contests</a>
+</li>
+
+->
+
+
+// Company Menu
+
+<li class="nav-item {{ session('menu') == 'home' ? 'active' : '' }}" data-toggle="tooltip" data-placement="right" title="Home">
+  <a class="nav-link" href="{{ route('company.home')}}">Home</a>
+</li>
+<li class="nav-item {{ session('menu') == 'profile' ? 'active' : '' }}" data-toggle="tooltip" data-placement="right" title="Company Info">
+  <a class="nav-link" href="{{ route('companyprofile.index')}}">Company Info</a>
+</li>
+<li class="nav-item {{ session('menu') == 'contest' ? 'active' : '' }}" data-toggle="tooltip" data-placement="right" title="Contest">
+  <a class="nav-link" href="{{ route('contests.index') }}">Contest</a>
+</li>
+<li class="nav-item {{ session('menu') == 'hire' ? 'active' : '' }}" data-toggle="tooltip" data-placement="right" title="Hire">
+  <a class="nav-link" href="{{ route('hire.index') }}">Hire</a>
+</li>
