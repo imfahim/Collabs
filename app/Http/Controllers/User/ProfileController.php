@@ -22,6 +22,8 @@ class ProfileController extends Controller
                       ->where('userId',Session::get('id'))
                       ->first();
 
+      $user = User::find(Session::get('id'));
+
 
       /*if(!$userdetails){
         $users = DB::table('users')
@@ -42,6 +44,26 @@ class ProfileController extends Controller
           if(count($userdetails)!=0){
     $teams=DB::table('teams')->select('id')->where('leader_id',Session::get('id'))->get();
     $jteams=DB::table('team_user')->select('team_id as id')->where('user_id',Session::get('id'))->where('invite',1)->get();
+    $user_joined = User::where('id', Session::get('id'))->first(['created_at']);
+
+
+    $seconds_ago = (time() - strtotime($user_joined->created_at));
+    $joined_since = '';
+
+    if ($seconds_ago >= 31536000) {
+        $joined_since = intval($seconds_ago / 31536000) . " years ago";
+    } elseif ($seconds_ago >= 2419200) {
+        $joined_since = intval($seconds_ago / 2419200) . " months ago";
+    } elseif ($seconds_ago >= 86400) {
+        $joined_since = intval($seconds_ago / 86400) . " days ago";
+    } elseif ($seconds_ago >= 3600) {
+        $joined_since = intval($seconds_ago / 3600) . " hours ago";
+    } elseif ($seconds_ago >= 60) {
+        $joined_since = intval($seconds_ago / 60) . " minutes ago";
+    } else {
+        $joined_since = "less than a minute ago";
+    }
+
     $teams=$teams->merge($jteams);
     $pro=NULL;
     foreach ($teams as $team) {
@@ -61,7 +83,7 @@ class ProfileController extends Controller
     $today = date("Y-m-d");
     $age = date_diff(date_create($userdetails->dateOfBirth), date_create($today));
       Session::put('menu', 'profile');
-      return view('user.profile.show')->with('user', $userdetails)->withAge($age->y)->withTid($teams)->withDone(count($pro))->withEdu($edu)->withJob($job);
+      return view('user.profile.show')->with('user', $userdetails)->withAge($age->y)->withTid($teams)->withDone(count($pro))->withEdu($edu)->withJob($job)->with('joined_when', $joined_since)->with('main_user', $user);
      }
      else{
        return view('user.profile.show')->withNai('nai');
@@ -75,7 +97,7 @@ class ProfileController extends Controller
      */
     public function create()
     {
-        //
+        return view('user.profile.create');
     }
 
     /**
@@ -86,8 +108,8 @@ class ProfileController extends Controller
      */
     public function store(UserRequest $request)
     {
-          $new_dOB = str_replace('/', '-', $request->dOB);
-          $dOB = Carbon::createFromFormat('d-m-Y', $new_dOB)->format('Y-m-d');
+          //$dOB = Carbon::createFromFormat('d-M-Y', $request->dOB)->format('Y-m-d');
+          $dOB = $request->dOB;
 
           $id =DB::table('userdetails')->insertGetId(
                   ['userId' => $request->session()->get('id'),
@@ -98,13 +120,15 @@ class ProfileController extends Controller
                   'occupation'=>$request->input('occupation'),
                   'website'=>$request->input('website'),
                   'aboutMe'=>$request->input('aboutMe'),
-                  'pastExperience'=>$request->input('pastExperience'),
-                  'education'=>$request->input('education'),
-                  'programmingExperience'=>$request->input('programmingExperience'),
+                  'education' => $request->input('education'),
+                  'team_exp' => '',
+                  'programming_language' => $request->input('programing_languages'),
+                  'archi_patters' => $request->input('archi'),
                   'projects'=>$request->input('projects')
                  ]
           );
 
+          Session::flash('success', 'Successfully Created !');
           return redirect()->route('user.home');
   }
 
@@ -127,7 +151,58 @@ class ProfileController extends Controller
      */
     public function edit($id)
     {
-        //
+      $userdetails = DB::table('userdetails')
+                      ->where('userId', Session::get('id'))
+                      ->first();
+
+
+            if(count($userdetails)!=0){
+      $teams=DB::table('teams')->select('id')->where('leader_id',Session::get('id'))->get();
+      $jteams=DB::table('team_user')->select('team_id as id')->where('user_id',Session::get('id'))->where('invite',1)->get();
+      $user_joined = User::where('id', Session::get('id'))->first(['created_at']);
+
+
+      $seconds_ago = (time() - strtotime($user_joined->created_at));
+      $joined_since = '';
+
+      if ($seconds_ago >= 31536000) {
+          $joined_since = intval($seconds_ago / 31536000) . " years ago";
+      } elseif ($seconds_ago >= 2419200) {
+          $joined_since = intval($seconds_ago / 2419200) . " months ago";
+      } elseif ($seconds_ago >= 86400) {
+          $joined_since = intval($seconds_ago / 86400) . " days ago";
+      } elseif ($seconds_ago >= 3600) {
+          $joined_since = intval($seconds_ago / 3600) . " hours ago";
+      } elseif ($seconds_ago >= 60) {
+          $joined_since = intval($seconds_ago / 60) . " minutes ago";
+      } else {
+          $joined_since = "less than a minute ago";
+      }
+
+      $teams=$teams->merge($jteams);
+      $pro=NULL;
+      foreach ($teams as $team) {
+        foreach ($team as $t) {
+
+        if($pro==null){
+          $pro=DB::table('team_project')->where('team_id',$t)->where('accept','>',0)->get();
+        }
+        else{
+          $qpro=DB::table('team_project')->where('team_id',$t)->where('accept','>',0)->get();
+          $pro=$pro->merge($qpro);
+        }
+        }
+      }
+      $edu=DB::table('user_educations')->where('user_id',Session::get('id'))->where('edu/job',0)->get();
+      $job=DB::table('user_educations')->where('user_id',Session::get('id'))->where('edu/job',1)->get();
+      $today = date("Y-m-d");
+      $age = date_diff(date_create($userdetails->dateOfBirth), date_create($today));
+        Session::put('menu', 'profile');
+        return view('user.profile.edit')->with('user', $userdetails)->withAge($age->y)->withTid($teams)->withDone(count($pro))->withEdu($edu)->withJob($job)->with('joined_when', $joined_since);
+       }
+       else{
+         return view('user.profile.show')->withNai('nai');
+       }
     }
 
     /**
@@ -137,7 +212,7 @@ class ProfileController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(UserRequest $request)
+    public function update(Request $request)
     {
 
 
@@ -148,9 +223,9 @@ class ProfileController extends Controller
               'occupation' => $request->input('occupation'),
               'website' => $request->input('website'),
               'aboutMe' => $request->input('aboutMe'),
-              'pastExperience' => $request->input('pastExperience'),
               'education' => $request->input('education'),
-              'programmingExperience' => $request->input('programmingExperience'),
+              'programming_language' => $request->input('programing_languages'),
+              'archi_patters' => $request->input('archi'),
               'projects' => $request->input('projects'),
           );
 
@@ -158,8 +233,8 @@ class ProfileController extends Controller
           ->where('id', $request->input('id'))
           ->update($updateUser);
 
-
-      return redirect()->route('profile.index');
+      Session::flash('success', 'Successfully Saved !');
+      return redirect()->back();
     }
 
     /**
