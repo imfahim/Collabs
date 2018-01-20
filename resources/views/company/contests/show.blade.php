@@ -36,7 +36,7 @@
             <div class="search-info">
               <label>&nbsp; Created By : {{ $owner->name }} ( {{ $owner->email }} )</label>
                <div class="pull-right">
-                 <a href="{{ route('profile.view', [$owner->id]) }}"><i class="fa fa-eye"></i></a>
+                 <a href="{{ route('profileof.view', [$owner->id]) }}"><i class="fa fa-eye"></i></a>
                </div>
             </div>
             <hr />
@@ -45,7 +45,7 @@
                 <div class="search-info">
                   <label>&nbsp; {{ $company->name }} ( {{ $company->email }} )</label>
                    <div class="pull-right">
-                     <a href="{{ route('profile.view', [$company->id]) }}"><i class="fa fa-eye"></i></a>
+                     <a href="{{ route('profileof.view', [$company->id]) }}"><i class="fa fa-eye"></i></a>
                    </div>
                 </div>
                 <br />

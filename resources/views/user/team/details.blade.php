@@ -137,7 +137,7 @@
       <div class="well well-sm border border-dark">Leader:</div>
       <div class="media">
         <div class="media-body">
-          <h4 class="media-heading"><a href="{{route('profile.view',[$leader->id])}}">{{$leader->name}}</a></h4>
+          <h4 class="media-heading"><a href="{{route('profileof.view',[$leader->id])}}">{{$leader->name}}</a></h4>
           <p>{{$leader->email}}</p>
         </div>
       </div>

@@ -32,7 +32,7 @@
                   <div class="search-info">
                     <label>{{ $user->name }}</label>  ({{ $user->email }} / {{ ($user->type) ? 'Organization' : 'Developer' }})
                     <div class="pull-right">
-                      <a href="{{ route('profile.view', [$user->id]) }}" target="_blank" class="btn btn-sm btn-info"><i class="fa fa-eye"></i></a>
+                      <a href="{{ route('profileof.view', [$user->id]) }}" target="_blank" class="btn btn-sm btn-info"><i class="fa fa-eye"></i></a>
                     </div>
                   </div>
                 </p>
@@ -44,7 +44,7 @@
                     <div class="search-info">
                       <label>{{ $user->name }}</label>  ({{ $user->email }} / {{ ($user->type) ? 'Organization' : 'Developer' }})
                       <div class="pull-right">
-                        <a href="{{ route('profile.view', [$user->id]) }}" target="_blank" class="btn btn-sm btn-info"><i class="fa fa-eye"></i></a>
+                        <a href="{{ route('profileof.view', [$user->id]) }}" target="_blank" class="btn btn-sm btn-info"><i class="fa fa-eye"></i></a>
                       </div>
                     </div>
                   </p>

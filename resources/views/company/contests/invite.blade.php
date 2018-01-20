@@ -49,7 +49,7 @@
                         <div class="search-info">
                           <label><input type="checkbox" name="companies[]" value="{{ $company->id }}">&nbsp; {{ $company->name }} -- {{ $company->email }}</label>
                            <div class="pull-right">
-                             <a href="{{ route('profile.view', [$company->id]) }}"><i class="fa fa-eye"></i></a>
+                             <a href="{{ route('profileof.view', [$company->id]) }}"><i class="fa fa-eye"></i></a>
                            </div>
                         </div>
                         <br />
